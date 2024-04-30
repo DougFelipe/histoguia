@@ -1,12 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Register from "./components/register";
+import Login from "./components/login";
 
 function App() {
   return (
-    <div className="w-full h-screen	bg-jet flex justify-center items-center">
-      <h1 className="text-3xl text-cinereous font-bold underline">
-        HistoGuia
-      </h1>
+    <div className="w-full h-screen bg-[#130338] flex justify-center items-center">
+      <Register></Register>
+      <Login></Login>
     </div>
   );
 }
