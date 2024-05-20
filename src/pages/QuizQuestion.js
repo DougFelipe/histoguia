@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './QuizQuestion.module.css'; 
+import styles from '../css/QuizQuestion.module.css'; 
 
 // Componente funcional QuizQuestion
 const QuizQuestion = () => {

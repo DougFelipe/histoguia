@@ -1,4 +1,5 @@
 import Icon from "./icon";
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -17,14 +18,22 @@ function Login() {
           className="w-[328px] h-[46px] mx-[202.5px] mb-[10px] px-[20px] bg-[#F1F0F3] text-[#6C6A6A] font-regular border-solid border-2 border-[#6C6A6A]/[.6] hover:border-[#6C6A6A] focus:border-[#6C6A6A] outline-none rounded-lg placeholder:text-[#6C6A6A] placeholder:font-regular"
           placeholder="Enter password"
         />
-        <a href="#" className="text-[#3D2E7C] font-regular ml-[403px]">
+
+        <a href="#"  className="text-[#3D2E7C] font-regular ml-[403px]">
           Forget Password?
         </a>
-        <input
+        <Link 
+          to="/quiz" 
+          className="w-[328px] h-[46px] mx-[202.5px] mt-[20px] bg-[#3D2E7C] text-[#FFFFFF] text-[18px] font-regular rounded-lg flex items-center justify-center"
+        >
+          Login
+        </Link>
+        {/* <input
+        href = "/quiz"
           type="submit"
           value="Login"
           className="w-[328px] h-[46px] mx-[202.5px] mt-[20px] bg-[#3D2E7C] text-[#FFFFFF] text-[18px] font-regular rounded-lg"
-        />
+        /> */}
       </form>
       <p className="text-[#757171] mx-[315px] mt-[15px] mb-[20px]">
         Or sign up with
