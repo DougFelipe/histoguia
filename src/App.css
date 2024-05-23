@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+  font-family: 'Inter Regular';
+  src: url('./assets/fonts/Inter-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Inter SemiBold';
+  src: url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.font-custom {
+  font-family: 'Inter SemiBold', sans-serif;
+}
 .App {
   text-align: center;
 }

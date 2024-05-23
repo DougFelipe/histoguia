@@ -9,6 +9,9 @@ module.exports = {
         'jet': '#292929',
         'cinereous': '#A58E8D',
       },
+      fontFamily: {
+        custom: ['Inter SemiBold', 'sans-serif'],
+      },
     },
   },
   plugins: [],

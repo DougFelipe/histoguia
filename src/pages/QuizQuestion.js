@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../css/QuizQuestion.module.css'; 
+import Sidebar from '../components/menu.js';
 
 // Componente funcional QuizQuestion
 const QuizQuestion = () => {
@@ -21,34 +22,37 @@ const QuizQuestion = () => {
 
   // Renderiza o componente na tela
   return (
-    <div className={styles.container}>
-      {/* Div container para a pergunta, contendo uma imagem e o texto da pergunta */}
-      <div className={styles.questionCard}>
-        <img src="/figura_questão.jpg" alt="Histology Slide" className={styles.image} />
-        <p className={styles.questionText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
+    <>
+      <Sidebar></Sidebar>
+      <div className={styles.container}>
+        {/* Div container para a pergunta, contendo uma imagem e o texto da pergunta */}
+        <div className={styles.questionCard}>
+          <img src="/figura_questão.jpg" alt="Histology Slide" className={styles.image} />
+          <p className={styles.questionText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit?</p>
+        </div>
+        {/* Formulário com as opções de resposta */}
+        <form onSubmit={handleSubmit} className={styles.optionsContainer}>
+          {/* Mapeia um array de opções e renderiza cada opção como um label com um input do tipo radio */}
+          {["Lorem ipsum dolor sit amet, consectetur adipiscing ", 
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "Lorem ipsum dolor sit amet,  adipiscing elit",
+          "Lorem sit amet, consectetur adipiscing elit"].map((option, index) => (
+            <label key={index} className={`${styles.optionLabel} ${selectedOption === option ? styles.optionLabelSelected : ''}`}>
+              <input 
+                type="radio" 
+                value={option} 
+                checked={selectedOption === option} 
+                onChange={handleOptionChange} 
+                className={styles.inputRadio}
+              />
+              {option} {/* Exibe o texto da opção */}
+            </label>
+          ))}
+          {/* Botão para submeter o formulário */}
+          <button type="submit" className={styles.submitButton}>Responder</button>
+        </form>
       </div>
-      {/* Formulário com as opções de resposta */}
-      <form onSubmit={handleSubmit} className={styles.optionsContainer}>
-        {/* Mapeia um array de opções e renderiza cada opção como um label com um input do tipo radio */}
-        {["Lorem ipsum dolor sit amet, consectetur adipiscing ", 
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        "Lorem ipsum dolor sit amet,  adipiscing elit",
-        "Lorem sit amet, consectetur adipiscing elit"].map((option, index) => (
-          <label key={index} className={`${styles.optionLabel} ${selectedOption === option ? styles.optionLabelSelected : ''}`}>
-            <input 
-              type="radio" 
-              value={option} 
-              checked={selectedOption === option} 
-              onChange={handleOptionChange} 
-              className={styles.inputRadio}
-            />
-            {option} {/* Exibe o texto da opção */}
-          </label>
-        ))}
-        {/* Botão para submeter o formulário */}
-        <button type="submit" className={styles.submitButton}>Responder</button>
-      </form>
-    </div>
+    </>
   );
 };
 
