@@ -10,13 +10,25 @@
   font-style: normal;
 }
 @font-face {
+  font-family: 'Inter Medium';
+  src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: 'Inter SemiBold';
   src: url('./assets/fonts/Inter-SemiBold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
-.font-custom {
+.font-inter-semi {
   font-family: 'Inter SemiBold', sans-serif;
+}
+.font-inter-medium {
+  font-family: 'Inter Medium', sans-serif;
+}
+.font-inter-regular {
+  font-family: 'Inter Regular', sans-serif;
 }
 .App {
   text-align: center;
