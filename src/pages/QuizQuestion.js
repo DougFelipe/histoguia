@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../css/QuizQuestion.module.css'; 
-import Sidebar from '../components/menu.js';
+import Sidebar from '../components/Menu.js';
 
 // Componente funcional QuizQuestion
 const QuizQuestion = () => {
