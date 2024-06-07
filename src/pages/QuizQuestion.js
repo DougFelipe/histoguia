@@ -7,7 +7,11 @@ const QuizQuestion = () => {
   // Utiliza o useState para criar o estado selectedOption, inicializado como null
   // Este estado armazena a opção selecionada pelo usuário
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const handleToggleSidebar = (isOpen) => {
+      setIsSidebarOpen(isOpen);
+  };
   // Função para tratar mudanças na seleção de opções. Atualiza o estado selectedOption com o valor selecionado
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -23,8 +27,11 @@ const QuizQuestion = () => {
   // Renderiza o componente na tela
   return (
     <>
-      <Sidebar></Sidebar>
-      <div className={styles.container}>
+    <div className="flex h-screen bg-[#F1F0F3]">
+            <Sidebar onToggle={handleToggleSidebar} />
+            <div className={`flex-grow transition-all duration-300 ${isSidebarOpen ? 'md:ml-64' : 'ml-0'}`}>
+                <div className="w-full h-full flex justify-center items-center">
+                <div className={styles.container}>
         {/* Div container para a pergunta, contendo uma imagem e o texto da pergunta */}
         <div className={styles.questionCard}>
           <img src="/figura_questão.jpg" alt="Histology Slide" className={styles.image} />
@@ -52,6 +59,11 @@ const QuizQuestion = () => {
           <button type="submit" className={styles.submitButton}>Responder</button>
         </form>
       </div>
+                </div>
+            </div>
+        </div>
+      {/* <Sidebar></Sidebar> */}
+      
     </>
   );
 };
