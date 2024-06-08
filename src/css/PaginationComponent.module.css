@@ -1,0 +1,60 @@
+.pagination {
+    display: flex;
+    margin: 5px;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #130338;
+    border-radius: 0.75rem;
+  }
+  
+  .pageButton {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pageButton:hover {
+    background-color: #3b3b3b;
+  }
+  
+  .activePageButton {
+    background: linear-gradient(135deg, #ff0080, #7928ca);
+    font-weight: bold;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .navButton {
+    background-color: transparent;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navButton:hover {
+    background-color: #3b3b3b;
+  }
+  
+  .chevronIcon {
+    width: 1rem;
+    height: 1rem;
+    color: #ffffff;
+  }
+  
+  .navButton svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  
