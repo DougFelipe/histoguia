@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../css/QuizQuestion.module.css';
 import Sidebar from '../components/Menu';
-import PaginationComponent from '../components/PaginationComponent';
+//import PaginationComponent from '../components/PaginationComponent';
 
 const questions = [
   {
@@ -102,11 +102,11 @@ const QuizQuestion = () => {
               ))}
               <button type="submit" className={styles.submitButton}>Responder</button>
             </form>
-            <PaginationComponent 
+            {/* <PaginationComponent 
               total={questions.length} 
               currentPage={currentPage} 
               onPageChange={handlePageChange} 
-            />
+            /> */}
           </div>
         </div>
       </div>

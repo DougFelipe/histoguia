@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Menu.js';
-import SearchBar from '../components/Home/SearchBar';
+import Control from '../components/QuizSetup/controls.js';
+import SelectableRectangles from '../components/QuizSetup/selectableRectangle.js';
+import CheckboxOptions from '../components/QuizSetup/checkboxOptions.js';
 
-const Home = () => {
+const QuizSetup = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const handleToggleSidebar = (isOpen) => {
@@ -14,11 +16,13 @@ const Home = () => {
             <Sidebar onToggle={handleToggleSidebar} />
             <div className={`flex-grow transition-all duration-300 ${isSidebarOpen ? 'md:ml-64' : 'ml-0'}`}>
                 <div className="w-full h-full flex flex-col justify-start items-center mt-12">
-                <SearchBar />
+                    <SelectableRectangles/>
+                    <Control/>
+                    <CheckboxOptions/>
                 </div>
             </div>
         </div>
     );
 }
 
-export default Home;
+export default QuizSetup;
