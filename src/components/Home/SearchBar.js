@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
@@ -15,6 +15,10 @@ const SearchBar = () => {
     'Honeydew',
   ];
 
+  useEffect(() => {
+    setResults(items);
+  }, []);
+
   const handleInputChange = (event) => {
     const value = event.target.value;
     setQuery(value);
@@ -25,7 +29,7 @@ const SearchBar = () => {
       );
       setResults(filteredItems);
     } else {
-      setResults([]);
+      setResults(items);
     }
   };
 
