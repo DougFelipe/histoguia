@@ -10,10 +10,10 @@ function Register(props) {
         Register
       </h1>
       <form className="flex flex-col">
-        <Input type="text" placeholder="Your First Name"></Input>
-        <Input type="text" placeholder="Your Last Name"></Input>
-        <Input type="email" placeholder="E-mail"></Input>
-        <Input type="password" placeholder="Password"></Input>
+        <Input type="text" placeholder="Your First Name" />
+        <Input type="text" placeholder="Your Last Name" />
+        <Input type="email" placeholder="E-mail" />
+        <Input type="password" placeholder="Password" />
         <input
           type="submit"
           value={"Sing Up"}

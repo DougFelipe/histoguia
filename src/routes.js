@@ -5,7 +5,8 @@ import LoginPage from "./pages/loginPage";
 import Home from "./pages/home";
 import QuizQuestion from "./pages/QuizQuestion";
 import QuizSetup from "./pages/quizSetup";
-import Register from "./components/register";
+import Register from "./components/Login/register";
+import AdmAlunos from "./pages/AdmAlunos";
 // import Usuario from "./Usuario";
 
 const RoutesApp = () => {
@@ -17,6 +18,7 @@ const RoutesApp = () => {
         <Route element={<QuizQuestion />} path="/quiz" />
         <Route element={<QuizSetup />} path="/quizSetup" />
         <Route element={<Register />} path="/register" />
+        <Route element={<AdmAlunos />} path="/admAlunos" />
 
         {/* <Route component = { Sobre }  path="/sobre" />
            <Route component = { Usuario }  path="/usuario" /> */}

@@ -43,9 +43,9 @@ function Login() {
       </p>
 
       <div className="flex gap-[22px] mx-[235px] max-md:mx-[50px] max-md:gap-[18px]">
-        <Icon src="fa-brands fa-google fa-2xl"></Icon>
-        <Icon src="fa-brands fa-apple fa-2xl"></Icon>
-        <Icon src="fa-brands fa-square-facebook fa-2xl"></Icon>
+        <Icon src="fa-brands fa-google fa-2xl" />
+        <Icon src="fa-brands fa-apple fa-2xl" />
+        <Icon src="fa-brands fa-square-facebook fa-2xl" />
       </div>
 
       <Link
