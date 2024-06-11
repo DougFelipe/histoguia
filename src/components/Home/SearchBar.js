@@ -30,8 +30,8 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="w-full max-w-md">
+    <div className="flex flex-col items-center justify-center w-full  bg-gray-100 p-4">
+      <div className="w-full ">
         <input
           type="text"
           placeholder="Search..."
@@ -40,9 +40,9 @@ const SearchBar = () => {
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         {results.length > 0 && (
-          <div className="mt-2 p-4 bg-white rounded-lg shadow-lg">
+          <div className="mt-2 grid grid-cols-6 gap-4">
             {results.map((result, index) => (
-              <div key={index} className="py-2 border-b last:border-b-0">
+              <div key={index} className="p-4 bg-white rounded-lg shadow-lg">
                 {result}
               </div>
             ))}
