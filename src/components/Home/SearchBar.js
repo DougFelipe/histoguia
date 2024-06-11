@@ -34,8 +34,8 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full p-4">
-      <div className="w-full">
+    <div className="flex flex-col items-center justify-center w-11/12 p-4">
+      <div className="w-full ">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg
@@ -59,7 +59,7 @@ const SearchBar = () => {
             placeholder="Qual tema você deseja procurar?"
             value={query}
             onChange={handleInputChange}
-            className="w-full p-2 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="w-full p-2 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300 "
           />
         </div>
         {results.length > 0 && (
