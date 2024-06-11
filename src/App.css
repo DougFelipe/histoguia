@@ -7,6 +7,13 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Inter Light';
+  src: url('./assets/fonts/Inter-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 @font-face {
   font-family: 'Inter Medium';
   src: url('./assets/fonts/Inter-Medium.ttf') format('truetype');
@@ -24,6 +31,9 @@
 }
 .font-inter-medium {
   font-family: 'Inter Medium', sans-serif;
+}
+.font-inter-light {
+  font-family: 'Inter Light', sans-serif;
 }
 .font-inter-regular {
   font-family: 'Inter Regular', sans-serif;
@@ -65,4 +75,151 @@
   to {
     transform: rotate(360deg);
   }
+}
+/* Custom styles for the range input */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #fff; /* White */
+  border: 2px solid #130338; /* Dark border */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff; /* White */
+  border: 2px solid #130338; /* Dark border */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff; /* White */
+  border: 2px solid #130338; /* Dark border */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Base styles for the range slider */
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Style for the slider track */
+.range-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  background: #e5e7eb; /* Gray-200 */
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Pseudo-element for the filled part */
+.range-slider::-webkit-slider-runnable-track::before {
+  content: '';
+  height: 6px;
+  background: #3b82f6; /* Blue-500 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--slider-fill, 0%);
+  border-radius: 4px;
+}
+
+/* Style for the slider thumb */
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #fff; /* White */
+  border: 2px solid #130338; /* Dark border */
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+/* Pseudo-elements for other browsers */
+.range-slider::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.range-slider::-moz-range-progress {
+  background: #3b82f6;
+  height: 6px;
+}
+
+.range-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 2px solid #130338; /* Dark border */
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.range-slider::-ms-track {
+  width: 100%;
+  height: 6px;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+  overflow: hidden;
+  position: relative;
+}
+
+.range-slider::-ms-fill-lower {
+  background: #3b82f6;
+  height: 8px;
+}
+
+.range-slider::-ms-fill-upper {
+  background: #e5e7eb;
+  height: 8px;
+}
+
+.range-slider::-ms-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 2px solid #130338; /* Dark border */
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+/* Updating the value of the filled part */
+.range-slider:after {
+  content: '';
+  width: 100%;
+  height: 8px;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.range-slider {
+  --slider-fill: 0%;
 }

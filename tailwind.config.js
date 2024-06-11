@@ -6,8 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'jet': '#292929',
-        'cinereous': '#A58E8D',
+        'light-purple': '#B2B3F1',
+        'primary': '#130338',
         'customPurple': '#130338',
       },
       fontFamily: {

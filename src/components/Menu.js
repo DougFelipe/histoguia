@@ -9,10 +9,10 @@ const Sidebar = ({ onToggle }) => {
     };
 
     return (
-        <div className='bg-[#F1F0F3]'>
+        <>
             <button
                 onClick={toggleSidebar}
-                className="m-4 p-2 text-white bg-[#F1F0F3] rounded-lg  focus:outline-none"
+                className="m-4 p-2 text-white bg-[#F1F0F3] rounded-lg  focus:outline-none absolute"
             >
                 <svg width="25" height="19" viewBox="0 0 25 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <line x1="1.4" y1="1.6" x2="23.5243" y2="1.6" stroke="#140B2A" stroke-width="2.8" stroke-linecap="round" />
@@ -89,7 +89,7 @@ const Sidebar = ({ onToggle }) => {
                 </div>
             </div>
 
-        </div>
+            </>
     );
 };
 
