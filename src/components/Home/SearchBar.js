@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import pcImage from '../../assets/img/pc.png';
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
   const items = [
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Date',
-    'Elderberry',
-    'Fig',
-    'Grape',
-    'Honeydew',
+    { nome: 'Apple', img: pcImage, status: 'Não iniciado' },
+    { nome: 'Banana', img: pcImage, status: 'Bloqueado' },
+    { nome: 'Cherry', img: pcImage, status: 50 },
+    { nome: 'Date', img: pcImage, status: 75 },
+    { nome: 'Elderberry', img: pcImage, status: 'Não iniciado' },
+    { nome: 'Fig', img: pcImage, status: 'Bloqueado' },
+    { nome: 'Grape', img: pcImage, status: 30 },
+    { nome: 'Honeydew', img: pcImage, status: 90 }
   ];
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const SearchBar = () => {
 
     if (value) {
       const filteredItems = items.filter((item) =>
-        item.toLowerCase().includes(value.toLowerCase())
+        item.nome.toLowerCase().includes(value.toLowerCase())
       );
       setResults(filteredItems);
     } else {
@@ -35,7 +36,7 @@ const SearchBar = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-11/12 p-4">
-      <div className="w-full ">
+      <div className="w-full">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg
@@ -59,14 +60,22 @@ const SearchBar = () => {
             placeholder="Qual tema você deseja procurar?"
             value={query}
             onChange={handleInputChange}
-            className="w-full p-2 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300 "
+            className="w-full p-2 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300"
           />
         </div>
         {results.length > 0 && (
           <div className="mt-6 grid grid-cols-2 md:grid-cols-6 gap-4">
             {results.map((result, index) => (
-              <div key={index} className="p-4 bg-white rounded-lg shadow-lg">
-                {result}
+              <div key={index} className="p-4 bg-white rounded-lg shadow-lg flex flex-col items-center">
+                <img className='w-full h-9/12 mb-2 rounded-[12px]' src={result.img} alt={result.nome} />
+                <div className='w-full'>
+                  <span className='block text-left mt-2 text-[14px] font-primary font-inter-semi' >{result.nome}</span>
+                </div>
+                <div className='w-full'>
+                  <span className='block text-left mt-10 text-[12px] font-[#9098A3] font-inter-regular' >
+                    {typeof result.status === 'number' ? `${result.status}%` : result.status}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
