@@ -63,7 +63,7 @@ const SearchBar = () => {
           />
         </div>
         {results.length > 0 && (
-          <div className="mt-2 grid grid-cols-2 md:grid-cols-6 gap-4">
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-6 gap-4">
             {results.map((result, index) => (
               <div key={index} className="p-4 bg-white rounded-lg shadow-lg">
                 {result}

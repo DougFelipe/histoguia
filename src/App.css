@@ -1,5 +1,7 @@
 
-
+body{
+  background-color: #F1F0F3;
+}
 
 @font-face {
   font-family: 'Inter Regular';
