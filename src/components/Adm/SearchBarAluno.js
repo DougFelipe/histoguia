@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { alunos } from "./Alunos";
+import Status from "./Status";
 
 const SearchBarAluno = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [check, setCheck] = useState(false);
+  const [color, setColor] = useState("#ffffff");
 
   const items = alunos;
 
@@ -23,6 +26,15 @@ const SearchBarAluno = () => {
     } else {
       setResults(items);
     }
+  };
+
+  const handleChecked = (event) => {
+    if (check === false) {
+      setColor("#F9FAFC");
+    } else {
+      setColor("#ffffff");
+    }
+    setCheck(event.target.checked);
   };
 
   return (
@@ -56,20 +68,75 @@ const SearchBarAluno = () => {
         </div>
         {results.length > 0 && (
           <div className="mt-6 gap-4 divide-y divide-gray">
-            <div className="bg-[#FFFFFF] flex flex-row gap-[20px] items-center px-[20px] py-[15px] font-semibold text-[20px] rounded-t-lg">
-              <div className="w-[40px] h-[40px] mr-[10px] border-solid border-[3px] border-[#E4E4E4] rounded-lg"></div>
-              <p className="w-[300px]">Users</p>
-              <p className="w-[107px]">Status</p>
-              <p className="w-[300px]">E-mail</p>
-              <p className="w-[100px]">Birthday</p>
+            <div className="bg-[#FFFFFF] flex flex-row items-center px-[20px] py-[15px] font-semibold text-[20px] rounded-t-lg">
+              <label
+                class="relative flex items-center mr-[30px] rounded-full cursor-pointer"
+                htmlFor="check"
+              >
+                <input
+                  type="checkbox"
+                  class="before:content[''] peer relative h-[40px] w-[40px] cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
+                  id="check"
+                  checked={check}
+                  onChange={handleChecked}
+                />
+                <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    stroke-width="1"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </span>
+              </label>
+              <p className="w-[320px]">Users</p>
+              <p className="w-[150px]">Status</p>
+              <p className="w-[320px]">E-mail</p>
+              <p className="w-[110px]">Birthday</p>
             </div>
             {results.map((result, index) => (
               <div
                 key={index}
-                className="px-[20px] py-[10px] bg-white shadow-lg flex flex-row items-center"
+                className={`px-[20px] py-[10px] bg-[${color}] flex flex-row items-center`}
+                id={index}
               >
-                <div className="w-[40px] h-[40px] mr-[30px] border-solid border-[3px] border-[#E4E4E4] rounded-lg"></div>
-                <div className="w-[330px] flex flex-row">
+                <label
+                  class="relative flex items-center mr-[30px] rounded-full cursor-pointer"
+                  htmlFor="check"
+                >
+                  <input
+                    type="checkbox"
+                    class="before:content[''] peer relative h-[40px] w-[40px] cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
+                    id="check"
+                    checked={check}
+                    onChange={handleChecked}
+                  />
+                  <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="1"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </span>
+                </label>
+                <div className="w-[320px] flex flex-row">
                   <img
                     className="w-[40px] h-[40px] rounded-[12px]"
                     src={result.img}
@@ -84,12 +151,8 @@ const SearchBarAluno = () => {
                     </span>
                   </div>
                 </div>
-                <div className="w-[120px]">
-                  <span className="w-[100px] block text-left text-[12px] font-[#9098A3] font-inter-regular">
-                    {typeof result.status === "number"
-                      ? `${result.status}%`
-                      : result.status}
-                  </span>
+                <div className="w-[150px]">
+                  <Status status={result.status} />
                 </div>
 
                 <div className="w-[330px]">
@@ -101,6 +164,12 @@ const SearchBarAluno = () => {
                   <span className="block text-left text-[12px] font-[#9098A3] font-inter-regular">
                     {result.birthday}
                   </span>
+                </div>
+                <div className="w-[80px]">
+                  <i className="fa-solid fa-circle-info fa-xl"></i>
+                </div>
+                <div className="w-[50px]">
+                  <i className="fa-regular fa-trash-can fa-xl"></i>
                 </div>
               </div>
             ))}
