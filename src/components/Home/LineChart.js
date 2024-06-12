@@ -47,14 +47,20 @@ const LineChart = () => {
         ticks: {
           maxRotation: 0,
           minRotation: 0,
+          color: 'white', // Set font color to white
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white', // Set font color to white
         },
       },
     },
   };
 
   return (
-    <div className='bg-[#130338] p-10 rounded-[25px]'>
-      <div className="chart-container" style={{ width: '500px', height: '250px' }}> 
+    <div className='bg-[#130338] p-10 rounded-[25px] '>
+      <div className="chart-container font-white" style={{ width: '500px', height: '250px' }}> 
         <Line data={data} options={options} />
       </div>
     </div>
