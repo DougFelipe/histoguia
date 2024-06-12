@@ -10,7 +10,7 @@ const SearchBar = () => {
     { nome: 'Banana', img: pcImage, status: 'Bloqueado' },
     { nome: 'Cherry', img: pcImage, status: 50 },
     { nome: 'Date', img: pcImage, status: 75 },
-    { nome: 'Elderberry', img: pcImage, status: 'Não iniciado' },
+    { nome: 'Elderberry', img: pcImage, status: 'Completo' },
     { nome: 'Fig', img: pcImage, status: 'Bloqueado' },
     { nome: 'Grape', img: pcImage, status: 30 },
     { nome: 'Honeydew', img: pcImage, status: 90 }
@@ -66,7 +66,7 @@ const SearchBar = () => {
         {results.length > 0 && (
           <div className="mt-6 grid grid-cols-2 md:grid-cols-6 gap-4">
             {results.map((result, index) => (
-              <div key={index} className="p-4 bg-white rounded-lg shadow-lg flex flex-col items-center">
+              <div key={index} className="p-4 bg-white rounded-[23px] shadow-lg flex flex-col items-center">
                 <img className='w-full h-9/12 mb-2 rounded-[12px]' src={result.img} alt={result.nome} />
                 <div className='w-full'>
                   <span className='block text-left mt-2 text-[14px] font-primary font-inter-semi' >{result.nome}</span>
