@@ -47,12 +47,12 @@ const LineChart = () => {
         ticks: {
           maxRotation: 0,
           minRotation: 0,
-          color: 'white', // Set font color to white
+          color: 'white', 
         },
       },
       y: {
         ticks: {
-          color: 'white', // Set font color to white
+          color: 'white', 
         },
       },
     },
