@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AdmSidebar from "../components/Adm/MenuAdm";
+import SearchBarAluno from "../components/Adm/SearchBarAluno";
 
 const AdmAlunos = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -16,8 +17,16 @@ const AdmAlunos = () => {
           isSidebarOpen ? "md:ml-64" : "ml-0"
         }`}
       >
-        <div className="w-full h-full flex flex-col justify-start items-center mt-12">
-          <h1>Teste</h1>
+        <div className="flex flex-row justify-between items-center mt-12 pl-[100px] p-4">
+          <p className="text-[24px] font-semibold">Alunos</p>
+          <button className="w-[140px] h-[48px] bg-[#7839CD] text-[#FFFFFF] rounded-lg">
+            <span className="mr-[10px]">Download</span>
+            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div className="flex flex-row justify-end items-center mt-4">
+          <SearchBarAluno />
         </div>
       </div>
     </div>
