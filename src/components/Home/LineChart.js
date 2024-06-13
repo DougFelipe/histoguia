@@ -59,8 +59,8 @@ const LineChart = () => {
   };
 
   return (
-    <div className='bg-[#130338] p-10 rounded-[25px] '>
-      <div className="chart-container font-white" style={{ width: '500px', height: '250px' }}> 
+    <div className='bg-[#130338] p-5 md:p-10 rounded-[25px] '>
+      <div className="chart-container font-white w-[310px] md:w-[650px] h-[170px]  md:h-[330px]" > 
         <Line data={data} options={options} />
       </div>
     </div>

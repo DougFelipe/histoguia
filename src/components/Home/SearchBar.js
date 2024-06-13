@@ -5,19 +5,19 @@ const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
-  const items = [
-    { nome: 'Apple', img: pcImage, status: 'Não iniciado' },
-    { nome: 'Banana', img: pcImage, status: 'Bloqueado' },
-    { nome: 'Cherry', img: pcImage, status: 50 },
-    { nome: 'Date', img: pcImage, status: 75 },
-    { nome: 'Elderberry', img: pcImage, status: 'Completo' },
-    { nome: 'Fig', img: pcImage, status: 'Bloqueado' },
-    { nome: 'Grape', img: pcImage, status: 30 },
-    { nome: 'Honeydew', img: pcImage, status: 90 }
-  ];
+  const temas = [
+    { nome: 'Epitélio Simples', img: pcImage, status: 'Não iniciado' },
+    { nome: 'Epitélio Estratificado', img: pcImage, status: 'Bloqueado' },
+    { nome: 'Tecido Conjuntivo Propriamente Dito', img: pcImage, status: 50 },
+    { nome: 'Tecido Conjuntivo Denso', img: pcImage, status: 75 },
+    { nome: 'Tecido Muscular Estriado Esquelético', img: pcImage, status: 'Completo' },
+    { nome: 'Tecido Muscular Liso', img: pcImage, status: 'Bloqueado' },
+    { nome: 'Tecido Nervoso', img: pcImage, status: 30 },
+    { nome: 'Cartilagem Hialina', img: pcImage, status: 90 }
+];
 
   useEffect(() => {
-    setResults(items);
+    setResults(temas);
   }, []);
 
   const handleInputChange = (event) => {
@@ -25,12 +25,12 @@ const SearchBar = () => {
     setQuery(value);
 
     if (value) {
-      const filteredItems = items.filter((item) =>
-        item.nome.toLowerCase().includes(value.toLowerCase())
+      const filteredItems = temas.filter((tema) =>
+      tema.nome.toLowerCase().includes(value.toLowerCase())
       );
       setResults(filteredItems);
     } else {
-      setResults(items);
+      setResults(temas);
     }
   };
 

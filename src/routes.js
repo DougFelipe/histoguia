@@ -2,11 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./pages/loginPage";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import QuizQuestion from "./pages/QuizQuestion";
 import QuizSetup from "./pages/quizSetup";
 import Register from "./components/Login/register";
 import AdmAlunos from "./pages/AdmAlunos";
+import UserProfile from "./pages/UserProfile";
 // import Usuario from "./Usuario";
 
 const RoutesApp = () => {
@@ -19,6 +20,7 @@ const RoutesApp = () => {
         <Route element={<QuizSetup />} path="/quizSetup" />
         <Route element={<Register />} path="/register" />
         <Route element={<AdmAlunos />} path="/admAlunos" />
+        <Route element={<UserProfile />} path="/profile" />
 
         {/* <Route component = { Sobre }  path="/sobre" />
            <Route component = { Usuario }  path="/usuario" /> */}
