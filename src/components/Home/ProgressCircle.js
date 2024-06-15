@@ -7,12 +7,9 @@ const ProgressCircle = ({ progress }) => {
     const circumference = normalizedRadius * 2 * Math.PI;
     const strokeDashoffset = circumference - (progress / 100) * circumference;
 
-    // Posição do texto "Questões Corretas"
-    const textTopPosition = radius - 20; // Posição acima do círculo
-
-    // Calcula a posição do texto de progresso baseado no progresso
+    const textTopPosition = radius - 20; 
     const textProgressPositionX = radius;
-    const textProgressPositionY = radius + 6; // Ajuste para posicionar o texto abaixo do meio do círculo
+    const textProgressPositionY = radius + 6; 
 
     return (
         <div className="relative flex justify-center items-center w-32 h-32 mx-auto">

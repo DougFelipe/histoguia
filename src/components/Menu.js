@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Avatar from "../assets/img/Avatar.png";
 
 const Sidebar = ({ onToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,18 +53,20 @@ const Sidebar = ({ onToggle }) => {
       </button>
 
       <div
-        className={`fixed top-0 left-0  h-full w-80 bg-[#140B2A] shadow-lg transform z-50 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300`}
+        className={`fixed top-0 left-0  h-full w-80 bg-[#140B2A] shadow-lg transform z-50 ${isOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300`}
       >
         <div className="flex items-center justify-between p-4 bg-[#140B2A] text-white">
-          <div>
-            <span className="px-2 text-[15px] text-white font-inter-semi">
-              Eloisa Fernandes
-            </span>
-            <p className="px-2 text-[11px] text-white font-inter-medium">
-              eloisafer16@gmail.com
-            </p>
+          <div className="flex">
+            <img src={Avatar} className="rounded-3xl" />
+            <div>
+              <span className="px-2 text-[15px] text-white font-inter-semi">
+                Eloisa Fernandes
+              </span>
+              <p className="px-2 text-[11px] text-white font-inter-medium">
+                eloisafer16@gmail.com
+              </p>
+            </div>
           </div>
           <button
             onClick={toggleSidebar}

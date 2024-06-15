@@ -35,7 +35,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-11/12 p-4">
+    <div className="flex flex-col items-center justify-center w-11/12 p-4 mt-3">
       <div className="w-full">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -64,15 +64,17 @@ const SearchBar = () => {
           />
         </div>
         {results.length > 0 && (
-          <div className="mt-6 grid grid-cols-2 md:grid-cols-6 gap-4">
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {results.map((result, index) => (
-              <div key={index} className="p-4 bg-white rounded-[23px] shadow-lg flex flex-col items-center">
+              <div key={index} className="p-4 bg-white rounded-[23px] shadow-lg flex flex-col items-center justify-between">
+                <div className='w-full'>
                 <img className='w-full h-9/12 mb-2 rounded-[12px]' src={result.img} alt={result.nome} />
                 <div className='w-full'>
                   <span className='block text-left mt-2 text-[14px] font-primary font-inter-semi' >{result.nome}</span>
                 </div>
+                </div>
                 <div className='w-full'>
-                  <span className='block text-left mt-10 text-[12px] font-[#9098A3] font-inter-regular' >
+                  <span className='block text-left mt-10 text-[12px] font-[#9098A3] font-inter-regular mb-2' >
                     {typeof result.status === 'number' ? `${result.status}%` : result.status}
                   </span>
                 </div>
