@@ -3,8 +3,8 @@ import EpitelioSimples from '../../assets/img/temas/epitelio-simples.jpg';
 import EpitelioEstratificado from '../../assets/img/temas/epitelio-estratificado.jpg';
 import TecidoConjuntivoDito from '../../assets/img/temas/tecido-conjuntivo-dito.jpeg';
 import TecidoConjuntivoDenso from '../../assets/img/temas/tecido-conjuntivo-denso.webp';
-import TecidoMuscularEstriado  from '../../assets/img/temas/musculo-estriado-esqueletico.jpg';
-import TecidoMuscularLiso  from '../../assets/img/temas/tecido-muscular-liso.webp';
+import TecidoMuscularEstriado from '../../assets/img/temas/musculo-estriado-esqueletico.jpg';
+import TecidoMuscularLiso from '../../assets/img/temas/tecido-muscular-liso.webp';
 import TecidoNervoso from '../../assets/img/temas/tecido-nervoso.webp';
 import CartilagemHialina from '../../assets/img/temas/cartilagem-hialina.jpeg';
 import CompleteIcon from './CompleteIcon';
@@ -18,15 +18,15 @@ const SearchBar = () => {
   const [results, setResults] = useState([]);
 
   const temas = [
-    { nome: 'Epitélio Simples', img: EpitelioSimples, status: 'Não iniciado' },
-    { nome: 'Epitélio Estratificado', img: EpitelioEstratificado, status: 'Bloqueado' },
-    { nome: 'Tecido Conjuntivo Propriamente Dito', img: TecidoConjuntivoDito, status: 50 },
-    { nome: 'Tecido Conjuntivo Denso', img: TecidoConjuntivoDenso, status: 75 },
-    { nome: 'Tecido Muscular Estriado Esquelético', img: TecidoMuscularEstriado, status: 'Completo' },
-    { nome: 'Tecido Muscular Liso', img: TecidoMuscularLiso, status: 'Bloqueado' },
-    { nome: 'Tecido Nervoso', img: TecidoNervoso, status: 30 },
-    { nome: 'Cartilagem Hialina', img: CartilagemHialina, status: 90 }
-];
+    { nome: 'Epitélio Simples', img: EpitelioSimples, status: 'Não iniciado', link: '/quizSetup' },
+    { nome: 'Epitélio Estratificado', img: EpitelioEstratificado, status: 'Bloqueado', link: '/quizSetup' },
+    { nome: 'Tecido Conjuntivo Propriamente Dito', img: TecidoConjuntivoDito, status: 50, link: '/quizSetup' },
+    { nome: 'Tecido Conjuntivo Denso', img: TecidoConjuntivoDenso, status: 75, link: '/quizSetup' },
+    { nome: 'Tecido Muscular Estriado Esquelético', img: TecidoMuscularEstriado, status: 'Completo', link: '/quizSetup' },
+    { nome: 'Tecido Muscular Liso', img: TecidoMuscularLiso, status: 'Bloqueado', link: '/quizSetup' },
+    { nome: 'Tecido Nervoso', img: TecidoNervoso, status: 30, link: '/quizSetup' },
+    { nome: 'Cartilagem Hialina', img: CartilagemHialina, status: 90, link: '/quizSetup' }
+  ];
 
   useEffect(() => {
     setResults(temas);
@@ -38,7 +38,7 @@ const SearchBar = () => {
 
     if (value) {
       const filteredItems = temas.filter((tema) =>
-      tema.nome.toLowerCase().includes(value.toLowerCase())
+        tema.nome.toLowerCase().includes(value.toLowerCase())
       );
       setResults(filteredItems);
     } else {
@@ -91,20 +91,19 @@ const SearchBar = () => {
         {results.length > 0 && (
           <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {results.map((result, index) => (
-              <div key={index} className="p-4 bg-white rounded-[23px] shadow-lg flex flex-col items-center justify-between">
-                <div className='w-full'>
-                <img className='object-cover w-full h-[140px] md:h-[180px] mb-2 rounded-[12px]' src={result.img} alt={result.nome} />
-                <div className='w-full'>
-                  <span className='block text-left mt-2 text-[16px] font-primary font-inter-semi' >{result.nome}</span>
-                </div>
-                </div>
-                <div className='w-full flex justify-between items-center h-auto mt-10'>
-                  <span className='block text-left  text-[14px] font-[#9098A3] font-inter-regular' >
-                    {typeof result.status === 'number' ? `${result.status}% completo` : result.status}
-                    
-                  </span>
-                  <div>{renderStatusComponent(result.status)}</div>
-                </div>
+              <div key={index} className="p-4 bg-white rounded-[23px] shadow-lg">
+                <a href={result.link} className='w-full pointer flex flex-col justify-between'>
+                  <div className='w-full'>
+                    <img className='object-cover w-full h-[140px] md:h-[180px] mb-2 rounded-[12px]' src={result.img} alt={result.nome} />
+                    <span className='w-full block text-left mt-2 text-[16px] font-primary font-inter-semi h-[60px]' >{result.nome}</span>
+                  </div>
+                  <div className='w-full flex justify-between items-center mt-10'>
+                    <span className='block text-left  text-[14px] font-[#9098A3] font-inter-regular' >
+                      {typeof result.status === 'number' ? `${result.status}% completo` : result.status}
+                    </span>
+                    <div>{renderStatusComponent(result.status)}</div>
+                  </div>
+                </a>
               </div>
             ))}
           </div>
