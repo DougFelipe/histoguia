@@ -8,6 +8,7 @@ import QuizSetup from "./pages/quizSetup";
 import Register from "./components/Login/register";
 import AdmAlunos from "./pages/AdmAlunos";
 import UserProfile from "./pages/UserProfile";
+import Historic from "./pages/Historic";
 // import Usuario from "./Usuario";
 
 const RoutesApp = () => {
@@ -21,6 +22,7 @@ const RoutesApp = () => {
         <Route element={<Register />} path="/register" />
         <Route element={<AdmAlunos />} path="/admAlunos" />
         <Route element={<UserProfile />} path="/profile" />
+        <Route element={<Historic />} path="/historic" />
 
         {/* <Route component = { Sobre }  path="/sobre" />
            <Route component = { Usuario }  path="/usuario" /> */}
