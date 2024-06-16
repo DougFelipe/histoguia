@@ -56,7 +56,7 @@ const Sidebar = ({ onToggle }) => {
         className={`fixed top-0 left-0  h-full w-80 bg-[#140B2A] shadow-lg transform z-50 ${isOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300`}
       >
-        <div className="flex items-center justify-between p-4 bg-[#140B2A] text-white">
+        <div className="flex items-center justify-between px-4 py-6 bg-[#140B2A] text-white">
           <div className="flex">
             <img src={Avatar} className="rounded-3xl" />
             <div>
@@ -86,7 +86,7 @@ const Sidebar = ({ onToggle }) => {
             </svg>
           </button>
         </div>
-        <nav className="px-3 py-1">
+        <nav className="px-3 ">
           <a
             href="/home"
             className="flex justify-left items-center my-3 py-3 px-3 text-gray-700 hover:bg-[#3D2E7C] rounded-[8px]"
