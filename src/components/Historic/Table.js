@@ -44,9 +44,9 @@ const Table = () => {
   };
 
   return (
-    <div className="overflow-x-auto w-11/12 mt-8">
-      <table className="w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+    <div className="overflow-x-auto w-11/12 mt-8 rounded-[20px]">
+      <table className="w-full divide-y divide-gray-200 rounded-[20px]">
+        <thead className="bg-gray-50  ">
           <tr>
             <th className="px-2 md:px-6 py-5 text-left text-[16px] font-inter-semi font-medium text-[#534D59] tracking-wider">
               Data
