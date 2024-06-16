@@ -100,7 +100,7 @@ const SearchBar = () => {
                 </div>
                 <div className='w-full flex justify-between items-center h-auto mt-10'>
                   <span className='block text-left  text-[14px] font-[#9098A3] font-inter-regular' >
-                    {typeof result.status === 'number' ? `${result.status}%` : result.status}
+                    {typeof result.status === 'number' ? `${result.status}% completo` : result.status}
                     
                   </span>
                   <div>{renderStatusComponent(result.status)}</div>
