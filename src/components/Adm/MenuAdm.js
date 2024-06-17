@@ -175,7 +175,7 @@ const AdmSidebar = ({ onToggle }) => {
           </a>
 
           <a
-            href="/quizSetup"
+            href="/questionBank"
             className="flex justify-left my-3  items-center py-3 px-3 text-gray-700 hover:bg-[#3D2E7C] rounded-[8px]"
           >
             <svg

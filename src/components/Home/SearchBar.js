@@ -8,7 +8,6 @@ import TecidoMuscularLiso from '../../assets/img/temas/tecido-muscular-liso.webp
 import TecidoNervoso from '../../assets/img/temas/tecido-nervoso.webp';
 import CartilagemHialina from '../../assets/img/temas/cartilagem-hialina.jpeg';
 import CompleteIcon from './CompleteIcon';
-import OverlappingSVGs from './OverlappingSVGs';
 import PartialSVGImage from './PartialSVGImage';
 import BlockedIcon from './BlockedIcon';
 import NotStartedIcon from './NotStartedIcon';
@@ -60,7 +59,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-11/12 p-4 mt-3">
+    <div className="flex flex-col items-center justify-center  w-full md:w-11/12 p-4 mt-3">
       <div className="w-full">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
