@@ -26,7 +26,7 @@ function Login() {
           Forget Password?
         </a>
         <Link
-          to="/quiz"
+          to="/home"
           className="w-[328px] h-[46px] mx-[202.5px] mt-[20px] bg-[#3D2E7C] text-[#FFFFFF] text-[18px] font-regular rounded-lg flex items-center justify-center max-md:mx-[25px] max-md:w-[250px]"
         >
           Login
