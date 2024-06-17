@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { alunos } from "./Alunos";
 import Status from "./Status";
+import Delete from "../../assets/icons/delete.svg";
+import Info from "../../assets/icons/info.svg";
+import Filter from "../../assets/icons/download-cloud.svg";
 
 const SearchBarAluno = () => {
   const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("");
   const [results, setResults] = useState([]);
-  const [check, setCheck] = useState(false);
-  const [color, setColor] = useState("#ffffff");
-
+  const [hidden, setHidden] = useState("hidden");
   const items = alunos;
 
   useEffect(() => {
@@ -28,14 +30,23 @@ const SearchBarAluno = () => {
     }
   };
 
-  const handleChecked = () => {
-    if (check === false) {
-      setColor("#F9FAFC");
+  const handleClick = () => {
+    if (hidden === "hidden") {
+      setHidden("block");
     } else {
-      setColor("#ffffff");
+      setHidden("hidden");
     }
+  };
 
-    setCheck(!check);
+  const handleStatusClick = (status) => {
+    const value = status;
+    if (value !== "All") {
+      setStatus(value);
+      const filteredItems = items.filter((item) => item.status === value);
+      setResults(filteredItems);
+    } else {
+      setResults(items);
+    }
   };
 
   const deleteAluno = (pos) => {
@@ -43,10 +54,10 @@ const SearchBarAluno = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-11/12 p-4 max-md:p-0 max-md:w-[250px]">
+    <div className="flex flex-col items-center justify-center w-10/12 p-0 mr-8 max-md:p-0 max-md:w-[250px]">
       <div className="w-full max-md:w-[250px]">
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <div className="relative flex flex-row justify-end gap-4 max-md:flex-col">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none max-md:top-[-65px]">
             <svg
               width="18"
               height="24"
@@ -68,81 +79,58 @@ const SearchBarAluno = () => {
             placeholder="Search"
             value={query}
             onChange={handleInputChange}
-            className="w-full p-2 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300 text-[14px] font-inter-regular max-md:w-[250px]"
+            className="w-full p-2 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300 text-[14px] font-inter-regular max-md:w-[320px]"
           />
+          <div>
+            <div
+              className="w-[140px] h-[48px] flex flex-row justify-center items-center text-[#7839CD] bg-[#F1F0F3] border-2 border-[#7839CD] rounded-lg cursor-pointer max-md:w-[320px]"
+              onClick={handleClick}
+            >
+              <span className="mr-[10px] font-semibold">Filter</span>
+              <div className="w-[25px] max-md:w-[20px]">
+                <img src={Filter} alt="Icone de Filtro" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="relative">
+          <div
+            className={`absolute w-[200px] h-[170px] bg-white rounded-lg mt-4 right-4 shadow-lg ${hidden} max-md:right-[-60px]`}
+          >
+            <p className="font-semibold text-[20px] text-center p-2">Status</p>
+            <div className="flex flex-col items-center gap-2 cursor-pointer">
+              <div onClick={() => handleStatusClick("All")}>
+                <Status status="All" value={status} />
+              </div>
+              <div onClick={() => handleStatusClick("Active")}>
+                <Status status="Active" value={status} />
+              </div>
+              <div onClick={() => handleStatusClick("Offline")}>
+                <Status status="Offline" value={status} />
+              </div>
+              <div onClick={() => handleStatusClick("Wait")}>
+                <Status status="Wait" value={status} />
+              </div>
+            </div>
+          </div>
         </div>
         {results.length > 0 && (
           <div className="mt-6 gap-4 divide-y divide-gray max-md:mt-2 max-md:mb-6">
             <div className="bg-[#FFFFFF] flex flex-row items-center px-[20px] py-[15px] font-semibold text-[20px] rounded-t-lg max-md:hidden">
-              <label
-                class="relative flex items-center mr-[30px] rounded-full cursor-pointer"
-                htmlFor="check"
-              >
-                <input
-                  type="checkbox"
-                  class="before:content[''] peer relative h-[40px] w-[40px] cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-                  id="check"
-                  checked={check}
-                  onChange={handleChecked}
-                />
-                <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="1"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </span>
-              </label>
-              <p className="w-[320px]">Users</p>
-              <p className="w-[150px]">Status</p>
-              <p className="w-[320px]">E-mail</p>
-              <p className="w-[110px]">Birthday</p>
+              <p className="w-[350px]">Users</p>
+              <p className="w-[180px]">Status</p>
+              <p className="w-[350px]">E-mail</p>
+              <p className="w-[180px]">Birthday</p>
+              <p className="w-[180px]"></p>
             </div>
             {results.map((result, index) => (
               <div
                 key={index}
-                className={`px-[20px] py-[10px] bg-[${color}] flex flex-row items-center max-md:flex-col max-md:gap-4 max-md:w-[250px] max-md:mb-[10px] max-md:rounded-lg max-md:items-start`}
+                className={`px-[20px] py-[10px] bg-white flex flex-row items-center max-md:flex-col max-md:gap-4 max-md:w-[320px] max-md:mb-[10px] max-md:rounded-lg max-md:items-start`}
                 id={index}
               >
                 <div className="flex max-md:flex-row-reverse max-md:gap-4">
-                  <label
-                    class="relative flex items-center mr-[30px] rounded-full cursor-pointer max-md:mr-[0px]"
-                    htmlFor="check"
-                  >
-                    <input
-                      type="checkbox"
-                      class="before:content[''] peer relative h-[40px] w-[40px] appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
-                      id={index}
-                      checked={check}
-                      disabled
-                    />
-                    <span class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        stroke="currentColor"
-                        stroke-width="1"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                    </span>
-                  </label>
-                  <div className="w-[320px] flex flex-row">
+                  <div className="w-[350px] flex flex-row">
                     <img
                       className="w-[40px] h-[40px] rounded-[12px]"
                       src={result.img}
@@ -158,14 +146,14 @@ const SearchBarAluno = () => {
                     </div>
                   </div>
                 </div>
-                <div className="w-[150px] flex gap-[80px] max-md:flex-row">
+                <div className="w-[180px] flex gap-[120px] max-md:flex-row">
                   <span className="hidden text-[#959595] text-[15px] p-0 max-md:block">
                     Status
                   </span>
                   <Status status={result.status} />
                 </div>
 
-                <div className="w-[330px] items-center flex gap-[10px] max-md:flex-row">
+                <div className="w-[350px] items-center flex gap-[60px] max-md:flex-row">
                   <span className="hidden text-[#959595] text-[15px] p-0 max-md:block">
                     Email
                   </span>
@@ -173,7 +161,7 @@ const SearchBarAluno = () => {
                     {result.email}
                   </span>
                 </div>
-                <div className="w-[100px] flex gap-[80px] max-md:flex-row ">
+                <div className="w-[180px] flex gap-[160px] max-md:flex-row ">
                   <span className="hidden text-[#959595] text-[15px] p-0 max-md:block">
                     Birthday
                   </span>
@@ -183,13 +171,12 @@ const SearchBarAluno = () => {
                 </div>
                 <div className="flex max-md:flex-row max-md:justify-end">
                   <div className="w-[80px] max-md:w-[40px]">
-                    <i className="fa-solid fa-circle-info fa-xl"></i>
+                    <div className="w-[50px] max-md:w-[20px] cursor-pointer">
+                      <img src={Info} alt="Icone de Info" />
+                    </div>
                   </div>
-                  <div className="w-[50px] max-md:w-[20px] cursor-pointer">
-                    <i
-                      className="fa-regular fa-trash-can fa-xl"
-                      onClick={() => deleteAluno(index)}
-                    ></i>
+                  <div className="w-[80px] max-md:w-[20px] cursor-pointer">
+                    <img src={Delete} alt="Icone de Delete" />
                   </div>
                 </div>
               </div>

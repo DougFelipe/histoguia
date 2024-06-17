@@ -15,7 +15,7 @@ const Status = (props) => {
 
   useEffect(() => {
     handleStatus();
-  }, []);
+  }, [props.status]);
 
   return (
     <div>

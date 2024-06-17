@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Avatar from "../../assets/img/Avatar.png";
 
 const AdmSidebar = ({ onToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,13 +58,16 @@ const AdmSidebar = ({ onToggle }) => {
         } transition-transform duration-300`}
       >
         <div className="flex items-center justify-between p-4 bg-[#140B2A] text-white">
-          <div>
-            <span className="px-2 text-[15px] text-white font-inter-semi">
-              João Fernandes
-            </span>
-            <p className="px-2 text-[11px] text-white font-inter-medium">
-              joao.fernandes.706@ufrn.edu.br
-            </p>
+          <div className="flex">
+            <img src={Avatar} className="rounded-3xl" />
+            <div>
+              <span className="px-2 text-[15px] text-white font-inter-semi">
+                João Fernandes
+              </span>
+              <p className="px-2 text-[11px] text-white font-inter-medium">
+                joao.fernandes.706@ufrn.edu.br
+              </p>
+            </div>
           </div>
           <button
             onClick={toggleSidebar}

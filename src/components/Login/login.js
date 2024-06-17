@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 function Login() {
   return (
-    <div className="bg-[#F1F0F3] w-[740px] h-[573px] max-md:w-full max-md:h-full ">
-      <h1 className="mx-[225px] mt-[75px] mb-[20px] text-[60px] text-[#3D2E7C] font-medium max-md:mx-[45px] max-md:text-[45px] max-md:mb-[10px]">
+    <div className="bg-[#F1F0F3] w-[740px] h-[573px] flex flex-col items-center max-md:h-full ">
+      <h1 className="mx-[225px] mt-[75px] mb-[20px] text-[60px] text-[#3D2E7C] font-medium max-md:mx-[30px] max-md:text-[45px] max-md:mb-[10px]">
         Histo <span className="text-[#8D8D8D] font-bold">Guia</span>
       </h1>
       <form className="flex flex-col">

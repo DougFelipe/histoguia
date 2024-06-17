@@ -4,7 +4,7 @@ import Input from "./input";
 function Register(props) {
   return (
     <div
-      className={`bg-[#3D2E7C] w-[435px] h-[573px] ${props.hidden} max-md:w-screen max-md:h-screen`}
+      className={`bg-[#3D2E7C] w-[435px] h-[573px] flex flex-col items-center ${props.hidden} max-md:w-[340px] max-md:h-screen`}
     >
       <h1 className="text-[#F7F6F6] font-semibold text-3xl pt-[75px] mb-[30px] mx-[160px] max-md:mx-[90px] max-md:text-[32px] max-md:mb-[25px]">
         Register
