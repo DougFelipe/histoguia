@@ -34,7 +34,7 @@ const Control = () => {
             className="w-full md:w-11/12 h-2 bg-light-purple rounded-lg appearance-none cursor-pointer"
           />
           <div className="flex w-full md:w-11/12 justify-between mt-2">
-            <span className="text-primary pl-1 pr-2">0</span>
+            <span className="text-primary pl-1 pr-2">1</span>
             <span className="text-primary">15</span>
             <span className="text-primary">30</span>
           </div>
