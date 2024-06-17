@@ -50,7 +50,8 @@ const SearchBarAluno = () => {
   };
 
   const deleteAluno = (pos) => {
-    console.log(pos);
+    const filteredItems = results.filter((item, index) => index !== pos);
+    setResults(filteredItems);
   };
 
   return (
@@ -176,7 +177,11 @@ const SearchBarAluno = () => {
                     </div>
                   </div>
                   <div className="w-[80px] max-md:w-[20px] cursor-pointer">
-                    <img src={Delete} alt="Icone de Delete" />
+                    <img
+                      src={Delete}
+                      alt="Icone de Delete"
+                      onClick={() => deleteAluno(index)}
+                    />
                   </div>
                 </div>
               </div>
