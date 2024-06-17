@@ -10,6 +10,7 @@ import AdmAlunos from "./pages/AdmAlunos";
 import UserProfile from "./pages/UserProfile";
 import Historic from "./pages/Historic";
 import QuestionBank from "./pages/QuestionBank";
+import Conclusion from "./components/QuizSetup/conclusion";
 // import Usuario from "./Usuario";
 
 const RoutesApp = () => {
@@ -25,6 +26,7 @@ const RoutesApp = () => {
         <Route element={<UserProfile />} path="/profile" />
         <Route element={<Historic />} path="/historic" />
         <Route element={<QuestionBank />} path="/questionBank" />
+        <Route element={<Conclusion />} path="/conclusion" />
       </Routes>
     </Router>
   );

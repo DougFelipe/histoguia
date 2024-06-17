@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styles from "../css/QuizQuestion.module.css";
 import Sidebar from "../components/Menu";
 import Circle from "../assets/icons/Ellipse 3.svg";
 import Verify from "../assets/icons/material-symbols_check-small-rounded.svg";
+import { useNavigate } from "react-router-dom";
 //import PaginationComponent from '../components/PaginationComponent';
 
 const questions = [
@@ -15,6 +15,10 @@ const questions = [
       "Quando as fibras colágenas desse tecido são organizadas em feixes sem uma orientação definida, o tecido chama-se denso modelado.",
       "Esse tecido apresenta 10 subdivisões.",
     ],
+    respostaCorreta:
+      "O tecido conjuntivo denso oferece maior resistência e proteção aos tecidos que o tecido conjuntivo frouxo.",
+    feedback:
+      "A resposta correta é: O tecido conjuntivo denso oferece maior resistência e proteção aos tecidos que o tecido conjuntivo frouxo. Essa é a resposta devido a...",
   },
   {
     question: "Assinale a alternativa incorreta sobre esse tecido:",
@@ -24,6 +28,10 @@ const questions = [
       "A substância fundamental é viscosa.",
       "Existem diversas variedades de tecidos conjuntivos.",
     ],
+    respostaCorreta:
+      "Apresenta uma baixa capacidade de regeneração, sendo substituído por tecido epitelial quando destruído.",
+    feedback:
+      "A resposta correta é: Apresenta uma baixa capacidade de regeneração, sendo substituído por tecido epitelial quando destruído. Essa é a resposta devido a...",
   },
   {
     question:
@@ -34,6 +42,9 @@ const questions = [
       "Tecido conjuntivo cartilaginoso.",
       "Tecido conjuntivo denso não-modelado.",
     ],
+    respostaCorreta: "Tecido conjuntivo denso modelado.",
+    feedback:
+      "A resposta correta é: Tecido conjuntivo denso modelado. Essa é a resposta devido a...",
   },
   {
     question: " São tipos de tecido conjuntivo especializado, EXCETO:",
@@ -43,6 +54,9 @@ const questions = [
       "Tecido adiposo",
       "Tecido muscular",
     ],
+    respostaCorreta: "Tecido muscular",
+    feedback:
+      "A resposta correta é: Tecido muscular. Essa é a resposta devido a...",
   },
   {
     question:
@@ -50,9 +64,12 @@ const questions = [
     options: [
       "Fibroblastos, células-tronco e macrófagos.",
       "Adipócitos, mastócitos e linfócitos.",
-      "Macrófagos, linfócitos, plasmócitos e eosinófilos. ",
+      "Macrófagos, linfócitos, plasmócitos e eosinófilos.",
       "Fibroblastos e linfócitos.",
     ],
+    respostaCorreta: "Macrófagos, linfócitos, plasmócitos e eosinófilos.",
+    feedback:
+      "A resposta correta é: Macrófagos, linfócitos, plasmócitos e eosinófilos. Essa é a resposta devido a...",
   },
 ];
 
@@ -60,6 +77,11 @@ const QuizQuestion = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [feedback, setFeedback] = useState(false);
+  const [buttonText, setButtonText] = useState("Responder");
+  const [acertos, setAcertos] = useState(0);
+
+  const navigate = useNavigate();
 
   const handleToggleSidebar = (isOpen) => {
     setIsSidebarOpen(isOpen);
@@ -71,7 +93,23 @@ const QuizQuestion = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Selected option: ${selectedOption}`);
+    if (buttonText === "Responder") {
+      if (selectedOption === currentQuestion.respostaCorreta) {
+        setAcertos(acertos + 1);
+      }
+      setFeedback(true);
+      setButtonText("Próximo");
+    } else {
+      setFeedback(false);
+      setButtonText("Responder");
+      if (currentPage !== questions.length) {
+        setCurrentPage(currentPage + 1);
+      } else {
+        navigate("/conclusion", {
+          state: { acertos: acertos },
+        });
+      }
+    }
   };
 
   const handlePageChange = (page) => {
@@ -89,53 +127,75 @@ const QuizQuestion = () => {
           isSidebarOpen ? "md:ml-64" : "ml-0"
         }`}
       >
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center">
           <div className="flex flex-col items-center gap-4 w-full">
-            <div className="flex flex-col items-center gap-4 bg-white mb-4 rounded-lg p-4 w-[1000px] font-semibold text-[#130338]">
+            <div className="flex flex-col items-center gap-4 bg-white mt-2 mb-4 rounded-lg p-4 w-[1000px] font-semibold text-[#130338] max-md:mt-[80px] max-md:w-[300px]">
               <img
                 src="/figura_questão.jpg"
                 alt="Histology Slide"
-                className="rounded-full w-[300px] h-[300px]"
+                className="rounded-full w-[300px] h-[300px] max-md:w-[200px] max-md:h-[200px]"
               />
-              <p className="text-[25px]">{currentQuestion.question}</p>
+              <p className="text-[25px] max-md:text-[15px]">
+                {currentQuestion.question}
+              </p>
             </div>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col items-center gap-2 w-[1000px]"
+              className="flex flex-col items-center gap-2 w-[1000px] max-md:w-[300px]"
             >
               {currentQuestion.options.map((option, index) => (
-                <label
-                  key={index}
-                  className={`p-3 rounded-lg cursor-pointer bg-white flex flex-row justify-between items-center w-full text-[#130338] text-[18px] ${
-                    selectedOption === option
-                      ? "bg-[#B2B3F1] font-semibold"
-                      : ""
-                  }`}
-                >
-                  {option}
-                  <img
-                    src={selectedOption === option ? Verify : Circle}
-                    alt="Círculo"
-                    className={`w-[20px] h-[20px] ${
+                <div className="flex flex-col items-center w-[1000px] max-md:w-[300px]">
+                  <label
+                    key={index}
+                    className={`p-3 cursor-pointer flex flex-row justify-between items-center w-full text-[#130338] text-[18px] max-md:text-[12px] ${
                       selectedOption === option
-                        ? "bg-[#130338] rounded-full"
-                        : ""
-                    }`}
-                  />
-                  <input
-                    type="radio"
-                    value={option}
-                    checked={selectedOption === option}
-                    onChange={handleOptionChange}
-                    className="hidden"
-                  />
-                </label>
+                        ? "bg-[#B2B1F3] font-semibold"
+                        : "bg-white"
+                    }
+                      ${
+                        feedback
+                          ? "rounded-t-lg pointer-events-none"
+                          : "rounded-lg"
+                      }
+                    `}
+                  >
+                    {option}
+                    <img
+                      src={selectedOption === option ? Verify : Circle}
+                      alt="CheckBox Imagem"
+                      className={`w-[20px] h-[20px] max-md:w-[15px] max-md:h-[15px] ${
+                        selectedOption === option
+                          ? "bg-[#130338] rounded-full"
+                          : ""
+                      }`}
+                    />
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={selectedOption === option}
+                      onChange={handleOptionChange}
+                      className="hidden"
+                    />
+                  </label>
+                  {feedback && selectedOption === option && (
+                    <div className="bg-white p-4 px-[30px] rounded-b-lg w-[1000px] max-md:w-[300px]">
+                      <p className="font-semibold text-[20px] text-[#130338] max-md:text-[15px]">
+                        {selectedOption === currentQuestion.respostaCorreta
+                          ? "Resposta Correta!"
+                          : "Resposta Errada!"}
+                      </p>
+                      <p className="text-[14px] text-light text-[#130338] max-md:text-[10px]">
+                        {currentQuestion.feedback}
+                      </p>
+                    </div>
+                  )}
+                </div>
               ))}
               <button
                 type="submit"
-                className="mt-2 mb-2 bg-[#130338] text-white w-[350px] p-2 rounded-md text-center"
+                className="mt-2 mb-2 bg-[#130338] text-white w-[350px] p-2 rounded-md text-center max-md:w-[200px]"
               >
-                Responder
+                {buttonText}
               </button>
             </form>
             {/* <PaginationComponent 
