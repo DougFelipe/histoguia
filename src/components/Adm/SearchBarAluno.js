@@ -4,6 +4,7 @@ import Status from "./Status";
 import Delete from "../../assets/icons/delete.svg";
 import Info from "../../assets/icons/info.svg";
 import Filter from "../../assets/icons/download-cloud.svg";
+import { useNavigate } from "react-router-dom";
 
 const SearchBarAluno = () => {
   const [query, setQuery] = useState("");
@@ -11,6 +12,8 @@ const SearchBarAluno = () => {
   const [results, setResults] = useState([]);
   const [hidden, setHidden] = useState("hidden");
   const items = alunos;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setResults(items);
@@ -47,6 +50,13 @@ const SearchBarAluno = () => {
     } else {
       setResults(items);
     }
+  };
+
+  const pageInfo = (pos) => {
+    const filteredItems = results.filter((item, index) => index === pos);
+    navigate("/userPage", {
+      state: { filteredItems },
+    });
   };
 
   const deleteAluno = (pos) => {
@@ -117,8 +127,8 @@ const SearchBarAluno = () => {
         </div>
         {results.length > 0 && (
           <div className="mt-6 gap-4 divide-y divide-gray max-md:mt-2 max-md:mb-6">
-            <div className="bg-[#FFFFFF] flex flex-row items-center px-[20px] py-[15px] font-semibold text-[20px] rounded-t-lg max-md:hidden">
-              <p className="w-[350px]">Users</p>
+            <div className="bg-[#FFFFFF] flex flex-row justify-center items-center px-[20px] py-[15px] font-semibold text-[20px] rounded-t-lg max-md:hidden">
+              <p className="w-[360px]">Users</p>
               <p className="w-[180px]">Status</p>
               <p className="w-[350px]">E-mail</p>
               <p className="w-[180px]">Birthday</p>
@@ -127,34 +137,39 @@ const SearchBarAluno = () => {
             {results.map((result, index) => (
               <div
                 key={index}
-                className={`px-[20px] py-[10px] bg-white flex flex-row items-center max-md:flex-col max-md:gap-4 max-md:w-[320px] max-md:mb-[10px] max-md:rounded-lg max-md:items-start`}
+                className={`px-[20px] py-[10px] bg-white flex flex-row items-center justify-between max-md:flex-col max-md:gap-4 max-md:w-[320px] max-md:mb-[10px] max-md:rounded-lg max-md:items-start`}
                 id={index}
               >
                 <div className="flex max-md:flex-row-reverse max-md:gap-4">
-                  <div className="w-[350px] flex flex-row">
+                  <div className="w-[310px] flex flex-row">
                     <img
                       className="w-[40px] h-[40px] rounded-[12px]"
-                      src={result.img}
-                      alt={result.nome}
+                      src={result.profileImage}
+                      alt={result.firstName}
                     />
                     <div className="flex flex-col justify-center ml-[10px]">
-                      <span className="text-left text-[14px] font-primary font-inter-semi max-md:text-[12px]">
-                        {result.nome}
-                      </span>
+                      <div className="flex flex-row gap-1">
+                        <span className="text-left text-[14px] font-primary font-inter-semi max-md:text-[12px]">
+                          {result.firstName}
+                        </span>
+                        <span className="text-left text-[14px] font-primary font-inter-semi max-md:text-[12px]">
+                          {result.lastName}
+                        </span>
+                      </div>
                       <span className="text-left text-[14px] text-[#959595] font-inter">
                         {result.username}
                       </span>
                     </div>
                   </div>
                 </div>
-                <div className="w-[180px] flex gap-[120px] max-md:flex-row">
+                <div className="w-[180px] flex justify-between max-md:w-[280px] max-md:flex-row">
                   <span className="hidden text-[#959595] text-[15px] p-0 max-md:block">
                     Status
                   </span>
                   <Status status={result.status} />
                 </div>
 
-                <div className="w-[350px] items-center flex gap-[60px] max-md:flex-row">
+                <div className="w-[350px] items-center flex justify-between max-md:flex-row max-md:w-[280px]">
                   <span className="hidden text-[#959595] text-[15px] p-0 max-md:block">
                     Email
                   </span>
@@ -162,18 +177,22 @@ const SearchBarAluno = () => {
                     {result.email}
                   </span>
                 </div>
-                <div className="w-[180px] flex gap-[160px] max-md:flex-row ">
+                <div className="w-[180px] flex justify-between max-md:w-[280px] max-md:flex-row ">
                   <span className="hidden text-[#959595] text-[15px] p-0 max-md:block">
                     Birthday
                   </span>
                   <span className="block text-left text-[12px] font-[#9098A3] font-inter-regular">
-                    {result.birthday}
+                    {result.birthdate}
                   </span>
                 </div>
-                <div className="flex max-md:flex-row max-md:justify-end">
+                <div className="flex max-md:flex-row">
                   <div className="w-[80px] max-md:w-[40px]">
                     <div className="w-[50px] max-md:w-[20px] cursor-pointer">
-                      <img src={Info} alt="Icone de Info" />
+                      <img
+                        src={Info}
+                        alt="Icone de Info"
+                        onClick={() => pageInfo(index)}
+                      />
                     </div>
                   </div>
                   <div className="w-[80px] max-md:w-[20px] cursor-pointer">

@@ -9,6 +9,7 @@ import Register from "./components/Login/register";
 import AdmAlunos from "./pages/AdmAlunos";
 import UserProfile from "./pages/UserProfile";
 import Historic from "./pages/Historic";
+import UserPage from "./components/Adm/UserPage";
 // import Usuario from "./Usuario";
 
 const RoutesApp = () => {
@@ -23,6 +24,7 @@ const RoutesApp = () => {
         <Route element={<AdmAlunos />} path="/admAlunos" />
         <Route element={<UserProfile />} path="/profile" />
         <Route element={<Historic />} path="/historic" />
+        <Route element={<UserPage />} path="/userPage" />
 
         {/* <Route component = { Sobre }  path="/sobre" />
            <Route component = { Usuario }  path="/usuario" /> */}
