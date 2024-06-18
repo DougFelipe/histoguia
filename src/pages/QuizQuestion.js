@@ -3,7 +3,7 @@ import Sidebar from "../components/Menu";
 import Circle from "../assets/icons/Ellipse 3.svg";
 import Verify from "../assets/icons/material-symbols_check-small-rounded.svg";
 import { useNavigate } from "react-router-dom";
-//import PaginationComponent from '../components/PaginationComponent';
+import PaginationComponent from '../components/PaginationComponent';
 
 const questions = [
   {
@@ -127,7 +127,7 @@ const QuizQuestion = () => {
           isSidebarOpen ? "md:ml-64" : "ml-0"
         }`}
       >
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center mt-16">
           <div className="flex flex-col items-center gap-4 w-full">
             <div className="flex flex-col items-center gap-4 bg-white mt-2 mb-4 rounded-lg p-4 w-[1000px] font-semibold text-[#130338] max-md:mt-[80px] max-md:w-[300px]">
               <img
@@ -198,11 +198,11 @@ const QuizQuestion = () => {
                 {buttonText}
               </button>
             </form>
-            {/* <PaginationComponent 
+            <PaginationComponent 
               total={questions.length} 
               currentPage={currentPage} 
               onPageChange={handlePageChange} 
-            /> */}
+            />
           </div>
         </div>
       </div>

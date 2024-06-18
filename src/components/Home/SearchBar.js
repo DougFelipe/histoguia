@@ -59,7 +59,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  w-full md:w-11/12 p-4 mt-3">
+    <div className="flex flex-col items-center justify-center  w-full md:w-11/12 p-4 mt-8 md:mt-2">
       <div className="w-full">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

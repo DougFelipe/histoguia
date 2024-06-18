@@ -20,10 +20,13 @@ const Home = () => {
             <div className={`flex-grow flex flex-col justify-center items-center transition-all duration-300 ${isSidebarOpen ? 'md:ml-64' : 'ml-0'}`}>
                 {/* ajustar */}
                 {/* <HorizontalScroll/> */}
-                {/* <div className=" flex justify-around items-center mt-12 w-11/12 text-white ">
+                <div className="flex justify-between items-center hidden md:flex mt-12 w-11/12 text-white ">
                     <Card/>
                     <LineChart />
-                </div> */}
+                </div>
+                <div className='w-11/12 hidden md:flex justify-end items-end mt-5'>
+                    <a href='/estatistic' className='pointer text-primary underline text-[20px]'>Ver mais</a>
+                </div>
                 <div className="w-full h-auto flex flex-col justify-start items-center mt-6">
                     <SearchBar />
                 </div>
