@@ -5,7 +5,7 @@ import Edit from '../../assets/icons/edit.svg';
 import Add from '../../assets/icons/add.svg';
 import { useNavigate } from 'react-router-dom';
 
-const questions = [
+const questionsData = [
     { id: 1, title: 'Qual é a unidade básica dos tecidos?' },
     { id: 2, title: 'Que tipo de tecido é responsável pela contração muscular?' },
     { id: 3, title: 'Que tipo de tecido reveste as superfícies do corpo?' },
@@ -18,7 +18,7 @@ const questions = [
     { id: 10, title: 'Qual é a função do tecido adiposo?' },
     { id: 11, title: 'O que são osteócitos?' },
     { id: 12, title: 'Qual é a função dos condrócitos?' },
-    { id: 13, title: 'Qual é a diferença entre tecido epitelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e l simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Quelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?Qual é a diferença entre tecido epitelial simples e estratificado?' },
+    { id: 13, title: 'Qual é a diferença entre tecido epitelial simples e estratificado?' },
     { id: 14, title: 'O que são glândulas endócrinas?' },
     { id: 15, title: 'O que são glândulas exócrinas?' },
     { id: 16, title: 'O que é tecido conjuntivo frouxo?' },
@@ -38,17 +38,21 @@ const generateCode = (id) => {
 };
 
 const QuestionTable = () => {
+    const [questions, setQuestions] = useState(questionsData);
     const [currentPage, setCurrentPage] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 10;
     const navigate = useNavigate();
+
     const handleEdit = (id) => {
-        // console.log('Edit question with id:', id);
         navigate(`/editQuestion/${id}`);
     };
 
-    const handleDelete = (id) => {
-        console.log('Delete question with id:', id);
+    const deleteQuestion = (id) => {
+        if (window.confirm('Tem certeza que deseja deletar esta pergunta?')) {
+            const updatedQuestions = questions.filter((question) => question.id !== id);
+            setQuestions(updatedQuestions);
+        }
     };
 
     const handlePageClick = (data) => {
@@ -130,7 +134,7 @@ const QuestionTable = () => {
                                             <img src={Edit} alt="Edit" />
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(question.id)}
+                                            onClick={() => deleteQuestion(question.id)}
                                             className="bg-white text-white font-bold py-1 px-2 rounded"
                                         >
                                             <img src={Delete} alt="Delete" />
