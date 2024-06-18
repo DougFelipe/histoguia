@@ -11,6 +11,7 @@ import UserProfile from "./pages/UserProfile";
 import Historic from "./pages/Historic";
 import QuestionBank from "./pages/QuestionBank";
 import Conclusion from "./components/QuizSetup/conclusion";
+import NewQuestion from "./pages/NewQuestion";
 // import Usuario from "./Usuario";
 
 const RoutesApp = () => {
@@ -27,6 +28,7 @@ const RoutesApp = () => {
         <Route element={<Historic />} path="/historic" />
         <Route element={<QuestionBank />} path="/questionBank" />
         <Route element={<Conclusion />} path="/conclusion" />
+        <Route element={<NewQuestion />} path="/newQuestion" />
       </Routes>
     </Router>
   );

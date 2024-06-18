@@ -72,7 +72,7 @@ const QuestionTable = () => {
     return (
         <div className=' w-11/12 flex flex-col justify-end items-end mt-12'>
             <a
-                href='/quiz'
+                href='/newQuestion'
                 type="submit"
                 className=" px-16 py-4 bg-primary  text-white  hover:bg-[#3D2E7C]"
             >
