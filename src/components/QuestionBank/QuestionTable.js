@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate';
 import Delete from '../../assets/icons/delete.svg';
 import Edit from '../../assets/icons/edit.svg';
 import Add from '../../assets/icons/add.svg';
+import { useNavigate } from 'react-router-dom';
 
 const questions = [
     { id: 1, title: 'Qual é a unidade básica dos tecidos?' },
@@ -40,9 +41,10 @@ const QuestionTable = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 10;
-
+    const navigate = useNavigate();
     const handleEdit = (id) => {
-        console.log('Edit question with id:', id);
+        // console.log('Edit question with id:', id);
+        navigate(`/editQuestion/${id}`);
     };
 
     const handleDelete = (id) => {

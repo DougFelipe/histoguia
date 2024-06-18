@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import NewQuestionForm from "../components/Question/NewQuestion.js";
+import EditQuestionForm from "../components/Question/EditQuestion.js";
 import AdmSidebar from "../components/Adm/MenuAdm.js";
 
-function NewQuestion() {
+function EditQuestion() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleToggleSidebar = (isOpen) => {
@@ -19,11 +19,11 @@ function NewQuestion() {
         }`}
       >
         <div className="w-full h-auto flex flex-col justify-start items-center mt-6">
-          <NewQuestionForm />
+          <EditQuestionForm />
         </div>
       </div>
     </div>
   );
 }
 
-export default NewQuestion;
+export default EditQuestion;
