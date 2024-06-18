@@ -84,7 +84,7 @@ const SearchBar = () => {
             placeholder="Qual tema você deseja procurar?"
             value={query}
             onChange={handleInputChange}
-            className="w-full p-2 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300 text-[14px] font-inter-regular"
+            className="w-full p-4 pl-10 border rounded-[50px] focus:outline-none focus:ring-2 focus:ring-gray-300 text-[14px] font-inter-regular"
           />
         </div>
         {results.length > 0 && (
