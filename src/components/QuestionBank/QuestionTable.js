@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import Delete from '../../assets/icons/delete.svg';
 import Edit from '../../assets/icons/edit.svg';
+import Add from '../../assets/icons/add.svg';
 
 const questions = [
     { id: 1, title: 'Qual é a unidade básica dos tecidos?' },
@@ -74,9 +75,9 @@ const QuestionTable = () => {
             <a
                 href='/newQuestion'
                 type="submit"
-                className=" px-16 py-4 bg-primary  text-white  hover:bg-[#3D2E7C]"
+                className=" px-12 py-4 bg-primary flex items-center rounded-xl text-white  hover:bg-[#3D2E7C]"
             >
-                Criar Questão
+                <img src={Add} alt="Add" className='p-2' />  Criar Questão
             </a>
             <div className="overflow-x-auto w-full flex flex-col justify-center items-center mt-4">
                 <div className="w-full relative mb-4">

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import Add from '../../assets/icons/add.svg';
 import Delete from '../../assets/icons/delete.svg';
 
@@ -10,10 +11,10 @@ function CadastroQuestao() {
   const [respostaCorreta, setRespostaCorreta] = useState('');
   const [feedback, setFeedback] = useState(false);
   const [buttonText, setButtonText] = useState('Cadastrar Questão');
+  const navigate = useNavigate(); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica para enviar os dados do formulário
     const questao = {
       enunciado,
       imagem,
@@ -23,6 +24,8 @@ function CadastroQuestao() {
     };
     console.log(questao);
     setFeedback(true);
+
+    navigate('/questionBank');
   };
 
   const handleOptionChange = (e) => {
