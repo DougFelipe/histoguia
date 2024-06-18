@@ -89,7 +89,7 @@ const AdmSidebar = ({ onToggle }) => {
         </div>
         <nav className="px-3 py-1">
           <a
-            href="/home"
+            href="/admAlunos"
             className="flex justify-left items-center my-3 py-3 px-3 text-gray-700 hover:bg-[#3D2E7C] rounded-[8px]"
           >
             <svg
