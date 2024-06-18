@@ -7,7 +7,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (user === "admin") {
+    if (user === "admin@gmail.com") {
       navigate("/admAlunos");
     } else {
       navigate("/home");
