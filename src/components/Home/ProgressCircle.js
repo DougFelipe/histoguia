@@ -1,8 +1,8 @@
 import React from 'react';
 
 const ProgressCircle = ({ progress }) => {
-    const radius = 50;
-    const stroke = 8;
+    const radius = 90;
+    const stroke = 15;
     const normalizedRadius = radius - stroke / 2;
     const circumference = normalizedRadius * 2 * Math.PI;
     const strokeDashoffset = circumference - (progress / 100) * circumference;
@@ -12,10 +12,8 @@ const ProgressCircle = ({ progress }) => {
     const textProgressPositionY = radius + 6; 
 
     return (
-        <div className="relative flex justify-center items-center w-32 h-32 mx-auto">
-            <div className="absolute top-0 m-auto w-full text-center text-sm text-whitefont-semibold">
-                Questões Corretas
-            </div>
+        <div className="relative flex justify-center items-center w-auto h-auto mx-auto">
+            
             <svg
                 className="w-full h-full"
                 height={radius * 3}
@@ -30,7 +28,7 @@ const ProgressCircle = ({ progress }) => {
                 </defs>
 
                 <circle
-                    className="text-blue-500"
+                    className="text-blue-500 "
                     strokeWidth={stroke}
                     strokeLinecap="round"
                     stroke="url(#gradient)"
@@ -48,7 +46,8 @@ const ProgressCircle = ({ progress }) => {
                 <text
                     x={textProgressPositionX}
                     y={textProgressPositionY}
-                    className="text-white"
+                    fill="white"
+                    className="text-[40px]"
                     fontSize="30px"
                     textAnchor="middle"
                     dominantBaseline="middle"

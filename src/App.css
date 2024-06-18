@@ -48,6 +48,9 @@ body{
   height: 40vmin;
   pointer-events: none;
 }
+.testando{
+  color: white !important;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
