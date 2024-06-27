@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "../../components/Menu.js";
-import Avatar from "../../assets/img/Avatar.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const UserPage = () => {
   const navigate = useNavigate();

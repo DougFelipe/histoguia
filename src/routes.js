@@ -14,6 +14,7 @@ import Conclusion from "./components/QuizSetup/conclusion";
 import NewQuestion from "./pages/NewQuestion";
 import EditQuestion from "./pages/EditQuestion";
 import Estatistic from "./pages/Estatistic";
+import UserPage from "./components/Adm/UserPage";
 // import Usuario from "./Usuario";
 
 const RoutesApp = () => {
@@ -33,6 +34,7 @@ const RoutesApp = () => {
         <Route element={<NewQuestion />} path="/newQuestion" />
         <Route element={<EditQuestion />} path="/editQuestion/:id" />
         <Route element={<Estatistic />} path="/estatistic" />
+        <Route element={<UserPage />} path="/userPage" />
       </Routes>
     </Router>
   );
