@@ -1,31 +1,54 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Add from '../../assets/icons/add.svg';
 import Delete from '../../assets/icons/delete.svg';
 
 function CadastroQuestao() {
-  const [enunciado, setEnunciado] = useState('');
+  const [statement, setStatement] = useState('');
   const [imagem, setImagem] = useState(null);
   const [alternativas, setAlternativas] = useState(['', '', '', '']);
   const [explicacoes, setExplicacoes] = useState(['', '', '', '']);
   const [respostaCorreta, setRespostaCorreta] = useState('');
+  const [themes, setThemes] = useState([]);
+  const [selectedTheme, setSelectedTheme] = useState('');
   const [feedback, setFeedback] = useState(false);
   const [buttonText, setButtonText] = useState('Cadastrar Questão');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/api/theme')
+      .then(response => response.json())
+      .then(data => setThemes(data));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const questao = {
-      enunciado,
-      imagem,
-      alternativas,
-      explicacoes,
-      respostaCorreta,
-    };
-    console.log(questao);
-    setFeedback(true);
 
-    navigate('/questionBank');
+    const questao = {
+      statement,
+      // imagem,
+      // alternativas,
+      // explicacoes,
+      // respostaCorreta,
+      theme: { id: selectedTheme },
+    };
+
+    fetch('http://localhost:8080/api/questions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(questao),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        setFeedback(true);
+        navigate('/questionBank');
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   const handleOptionChange = (e) => {
@@ -69,10 +92,10 @@ function CadastroQuestao() {
                 />
               )}
               <textarea
-                className="w-full p-2 border border-gray-300 rounded font-inter-regular" 
+                className="w-full p-2 border border-gray-300 rounded font-inter-regular"
                 placeholder="Digite o enunciado da questão"
-                value={enunciado}
-                onChange={(e) => setEnunciado(e.target.value)}
+                value={statement}
+                onChange={(e) => setStatement(e.target.value)}
                 required
               />
               <input
@@ -86,6 +109,17 @@ function CadastroQuestao() {
               onSubmit={handleSubmit}
               className="flex flex-col items-center gap-2 w-[1000px] max-md:w-[300px] bg-[#ffffff]"
             >
+              <select
+                className="w-full p-2 mb-2 border border-gray-300 rounded font-inter-regular"
+                value={selectedTheme}
+                onChange={(e) => setSelectedTheme(e.target.value)}
+                required
+              >
+                <option value="" disabled>Selecione um tema</option>
+                {themes.map((theme) => (
+                  <option key={theme.id} value={theme.id}>{theme.name}</option>
+                ))}
+              </select>
               {alternativas.map((alt, index) => (
                 <div key={index} className="flex flex-col items-center w-[1000px] max-md:w-[300px] font-inter-regular">
                   <div className="flex flex-row items-center w-full">
@@ -111,9 +145,8 @@ function CadastroQuestao() {
                         className="hidden"
                       />
                       <span
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                          respostaCorreta === alt ? 'border-[#130338]' : 'border-gray-300'
-                        }`}
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${respostaCorreta === alt ? 'border-[#130338]' : 'border-gray-300'
+                          }`}
                       >
                         {respostaCorreta === alt && (
                           <span className="w-3 h-3 bg-[#130338] rounded-full"></span>
@@ -147,7 +180,7 @@ function CadastroQuestao() {
                   onClick={handleAddAlternative}
                   className="mt-2 mb-2 bg-[#130338] flex justify-center items-center text-white p-2 rounded-md text-center"
                 >
-                  <img src={Add} alt="Add" className='p-2' /> 
+                  <img src={Add} alt="Add" className='p-2' />
                 </button>
               </div>
               <button
