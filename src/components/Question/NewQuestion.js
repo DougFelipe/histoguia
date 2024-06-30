@@ -83,7 +83,7 @@ function CadastroQuestao() {
       <div className="flex-grow transition-all duration-300 ml-0">
         <div className="w-full flex justify-center items-center">
           <div className="flex flex-col items-center gap-4 w-full">
-            <div className="flex flex-col font-inter-regular justify-center items-center gap-4 bg-white mt-2 mb-4 rounded-lg p-4 w-[1030px]  font-semibold text-[#130338] md:mt-[60px] ">
+            <div className="flex flex-col font-inter-regular justify-center items-center gap-4 bg-white mt-2 mb-4 rounded-lg p-4 w-11/12 md:w-[1030px]  font-semibold text-[#130338] md:mt-[60px] ">
               {imagem && (
                 <img
                   src={imagem}
@@ -92,7 +92,7 @@ function CadastroQuestao() {
                 />
               )}
               <textarea
-                className="w-full p-2 border border-gray-300 rounded font-inter-regular"
+                className="w-11/12 p-2 border border-gray-300 rounded font-inter-regular"
                 placeholder="Digite o enunciado da questão"
                 value={statement}
                 onChange={(e) => setStatement(e.target.value)}
