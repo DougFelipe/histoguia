@@ -34,11 +34,24 @@ const QuestionTable = () => {
     navigate(`/editQuestion/${id}`);
   };
 
-  const deleteQuestion = (id) => {
+  const deleteQuestion = async (id) => {
     if (window.confirm('Tem certeza que deseja deletar esta pergunta?')) {
-      const updatedQuestions = questions.filter((question) => question.id !== id);
-      setQuestions(updatedQuestions);
-      // Optionally, send a delete request to the server
+      try {
+        const response = await fetch(`http://localhost:8080/api/questions/delete/${id}`, {
+          method: 'DELETE',
+        });
+  
+        if (response.ok) {
+          const updatedQuestions = questions.filter((question) => question.id !== id);
+          setQuestions(updatedQuestions);
+        } else {
+          // Handle errors here
+          console.error('Failed to delete the question.');
+        }
+      } catch (error) {
+        // Handle network errors here
+        console.error('An error occurred while deleting the question:', error);
+      }
     }
   };
 
