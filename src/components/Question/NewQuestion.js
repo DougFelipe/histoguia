@@ -24,6 +24,12 @@ function CadastroQuestao() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const alternativasData = alternativas.map((alt, index) => ({
+      answer: alt,
+      explication: explicacoes[index],
+      isCorret: respostaCorreta === alt,
+    }));
+
     const questao = {
       statement,
       // imagem,
@@ -32,6 +38,7 @@ function CadastroQuestao() {
       // respostaCorreta,
       theme: { id: selectedTheme },
     };
+
 
     fetch('http://localhost:8080/api/questions', {
       method: 'POST',
@@ -42,9 +49,34 @@ function CadastroQuestao() {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Success:', data);
-        setFeedback(true);
-        navigate('/questionBank');
+        if (!data.id) {
+          throw new Error('Failed to get question ID');
+        }
+
+        const questionId = data.id;
+        const alternativasData = alternativas.map((alt, index) => ({
+          answer: alt,
+          explication: explicacoes[index],
+          isCorret: respostaCorreta === alt,
+          question: { id: questionId }
+        }));
+
+        fetch('http://localhost:8080/api/answers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(alternativasData),
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+            setFeedback(true);
+            navigate('/questionBank');
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
       })
       .catch((error) => {
         console.error('Error:', error);

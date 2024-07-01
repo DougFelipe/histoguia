@@ -22,7 +22,7 @@ const QuestionTable = () => {
       .then(data => {
         if (Array.isArray(data)) {
           setQuestions(data);
-          console.log(questions);
+          console.log(data); // Use `data` diretamente após setar o estado
         } else {
           console.error('Expected an array but got:', data);
         }
