@@ -6,49 +6,136 @@ import Delete from '../../assets/icons/delete.svg';
 const EditQuestion = () => {
   const { id } = useParams(); // Obtém o ID da questão da URL
   const navigate = useNavigate();
-  
+  const [question, setQuestion] = useState(null);
+
+  const [answers, setAnswers] = useState([]);
   const [enunciado, setEnunciado] = useState('');
   const [imagem, setImagem] = useState(null);
-  const [alternativas, setAlternativas] = useState(['', '', '', '']);
+  //const [alternativas, setAlternativas] = useState(['', '', '', '']);
+  const [alternatives, setAlternatives] = useState([]);
   const [explicacoes, setExplicacoes] = useState(['', '', '', '']);
   const [respostaCorreta, setRespostaCorreta] = useState('');
   const [feedback, setFeedback] = useState(false);
+  const [themes, setThemes] = useState([]);
+  const [selectedTheme, setSelectedTheme] = useState('');
   const [buttonText, setButtonText] = useState('Atualizar Questão');
 
-  // Simulação de dados da questão para edição
-  const questaoParaEditar = {
-    enunciado: 'Qual é a unidade básica dos tecidos?',
-    imagem: null,
-    alternativas: ['Célula', 'Fibra', 'Núcleo', 'Vesícula'],
-    explicacoes: ['Descrição da célula', 'Descrição da fibra', 'Descrição do núcleo', 'Descrição da vesícula'],
-    respostaCorreta: 'Célula'
-  };
+
+
 
   useEffect(() => {
-    // Simula o carregamento dos dados da questão para edição
-    setEnunciado(questaoParaEditar.enunciado);
-    setImagem(questaoParaEditar.imagem);
-    setAlternativas([...questaoParaEditar.alternativas]);
-    setExplicacoes([...questaoParaEditar.explicacoes]);
-    setRespostaCorreta(questaoParaEditar.respostaCorreta);
+    fetch('/api/theme')
+      .then(response => response.json())
+      .then(data => setThemes(data));
+
+    fetch(`http://localhost:8080/api/questions/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        setEnunciado(data.statement);
+        setQuestion(data);
+        console.log(question);
+        //setImagem(data.image ? URL.createObjectURL(data.image) : null);
+        setSelectedTheme(data.theme.id);
+
+        fetch(`http://localhost:8080/api/answers/question/${id}`)
+          .then(response => response.json())
+          .then(alternativeData => {
+            setAnswers(alternativeData);
+            if (Array.isArray(alternativeData)) {
+              setAlternatives(alternativeData.map(alt => alt.answer));
+              setExplicacoes(alternativeData.map(alt => alt.explication));
+              const correctAnswer = alternativeData.find(alt => alt.isCorret);
+              if (correctAnswer) {
+                setRespostaCorreta(correctAnswer.answer);
+              }
+            } else {
+              console.error('Expected array but got:', alternativeData);
+            }
+          })
+          .catch(error => console.error('Error fetching alternatives:', error));
+      })
+      .catch(error => console.error('Error fetching question:', error));
   }, [id]);
+
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
+    // Monta o objeto da questão atualizada
     const questaoAtualizada = {
-      id, // Você pode incluir o ID da questão aqui para atualização
-      enunciado,
-      imagem,
-      alternativas,
-      explicacoes,
-      respostaCorreta,
+      id,
+      statement: enunciado,
+      theme: { id: selectedTheme },
     };
-    console.log('Questão atualizada:', questaoAtualizada);
+    // Monta o array de alternativas atualizadas
+    const alternativasAtualizadas = alternatives.map((alt, index) => ({
+      id: answers[index]?.id, // Verifica se há um ID existente para atualização
+      answer: alt,
+      explication: explicacoes[index],
+      isCorret: respostaCorreta === alt,
+      question: { id: id }
+    }));
+  
     setFeedback(true);
-
-    // Lógica para atualizar a questão no backend aqui
-
-    navigate('/questionBank'); // Redireciona após a atualização
+  
+    // Define a promessa para enviar os dados da questão atualizada
+    const updateQuestion = (e) => fetch(`http://localhost:8080/api/questions/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(questaoAtualizada),
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(data => {
+      console.log('Questão atualizada:', data);
+      setFeedback(true);
+      // Após atualizar a questão, atualiza as alternativas
+      return Promise.all(alternativasAtualizadas.map(alt => {
+        if (alt.id) {
+          // Se há um ID, atualiza a alternativa existente
+          return fetch(`http://localhost:8080/api/answers/${alt.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(alt),
+          }).then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          });
+        } else {
+          // Se não há um ID, cria uma nova alternativa
+          return fetch(`http://localhost:8080/api/answers`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(alt),
+          }).then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          });
+        }
+      }));
+    }).then(() => {
+      // Após todas as alternativas serem atualizadas, navega para a página de questionBank
+      navigate('/questionBank');
+    }).catch(error => {
+      console.error('Error updating question or answers:', error);
+    });
+  
+    // Executa a promessa de atualização da questão e das alternativas
+    updateQuestion();
   };
 
   const handleOptionChange = (e) => {
@@ -62,18 +149,18 @@ const EditQuestion = () => {
   };
 
   const handleAddAlternative = () => {
-    setAlternativas([...alternativas, '']);
+    setAlternatives([...alternatives, '']);
     setExplicacoes([...explicacoes, '']);
   };
 
   const handleDeleteAlternative = (index) => {
-    const newAlternativas = [...alternativas];
+    const newAlternativas = [...alternatives];
     newAlternativas.splice(index, 1);
     const newExplicacoes = [...explicacoes];
     newExplicacoes.splice(index, 1);
-    setAlternativas(newAlternativas);
+    setAlternatives(newAlternativas);
     setExplicacoes(newExplicacoes);
-    if (respostaCorreta === alternativas[index]) {
+    if (respostaCorreta === alternatives[index]) {
       setRespostaCorreta('');
     }
   };
@@ -92,7 +179,7 @@ const EditQuestion = () => {
                 />
               )}
               <textarea
-                className="w-full p-2 border border-gray-300 rounded font-inter-regular" 
+                className="w-full p-2 border border-gray-300 rounded font-inter-regular"
                 placeholder="Digite o enunciado da questão"
                 value={enunciado}
                 onChange={(e) => setEnunciado(e.target.value)}
@@ -109,7 +196,18 @@ const EditQuestion = () => {
               onSubmit={handleSubmit}
               className="flex flex-col items-center gap-2 w-[1000px] max-md:w-[300px] bg-[#ffffff]"
             >
-              {alternativas.map((alt, index) => (
+              <select
+                className="w-full p-2 mb-2 border border-gray-300 rounded font-inter-regular"
+                value={selectedTheme}
+                onChange={(e) => setSelectedTheme(e.target.value)}
+                required
+              >
+                <option value="" disabled>Selecione um tema</option>
+                {themes.map((theme) => (
+                  <option key={theme.id} value={theme.id}>{theme.name}</option>
+                ))}
+              </select>
+              {alternatives.map((alt, index) => (
                 <div key={index} className="flex flex-col items-center w-[1000px] max-md:w-[300px] font-inter-regular">
                   <div className="flex flex-row items-center w-full">
                     <input
@@ -117,9 +215,9 @@ const EditQuestion = () => {
                       className="w-full p-2 mb-2 border border-gray-300 rounded"
                       value={alt}
                       onChange={(e) => {
-                        const newAlternativas = [...alternativas];
+                        const newAlternativas = [...alternatives];
                         newAlternativas[index] = e.target.value;
-                        setAlternativas(newAlternativas);
+                        setAlternatives(newAlternativas);
                       }}
                       placeholder={`Alternativa ${index + 1}`}
                       required
@@ -134,9 +232,8 @@ const EditQuestion = () => {
                         className="hidden"
                       />
                       <span
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                          respostaCorreta === alt ? 'border-[#130338]' : 'border-gray-300'
-                        }`}
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${respostaCorreta === alt ? 'border-[#130338]' : 'border-gray-300'
+                          }`}
                       >
                         {respostaCorreta === alt && (
                           <span className="w-3 h-3 bg-[#130338] rounded-full"></span>
@@ -170,7 +267,7 @@ const EditQuestion = () => {
                   onClick={handleAddAlternative}
                   className="mt-2 mb-2 bg-[#130338] flex justify-center items-center text-white p-2 rounded-md text-center"
                 >
-                  <img src={Add} alt="Add" className='p-2' /> 
+                  <img src={Add} alt="Add" className='p-2' />
                 </button>
               </div>
               <button

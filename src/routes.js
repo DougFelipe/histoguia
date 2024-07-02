@@ -34,7 +34,7 @@ const RoutesApp = () => {
         <Route element={<NewQuestion />} path="/newQuestion" />
         <Route element={<EditQuestion />} path="/editQuestion/:id" />
         <Route element={<Estatistic />} path="/estatistic" />
-        <Route element={<UserPage />} path="/userPage" />
+        <Route element={<UserPage />} path="/userPage"/>
       </Routes>
     </Router>
   );

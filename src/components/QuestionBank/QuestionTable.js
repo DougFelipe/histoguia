@@ -16,6 +16,7 @@ const QuestionTable = () => {
   const itemsPerPage = 10;
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     fetch('http://localhost:8080/api/questions')
       .then(response => response.json())
