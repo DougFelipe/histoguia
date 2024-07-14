@@ -3,18 +3,47 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 function Login() {
-  const [user, setUser] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    if (user === "admin@gmail.com") {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.email === "admin@gmail.com") {
       navigate("/admAlunos");
     } else {
-      navigate("/home");
+      try {
+        console.log(formData);
+
+        const response = await fetch("/api/users/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        })
+          .then((response) => {
+            const data = response.json();
+
+            console.log("Login Realizado:", response.data);
+            localStorage.setItem("token", data.token);
+            navigate("/home");
+          })
+          .catch((error) => {
+            console.error("There was an error login the user!", error);
+          });
+      } catch (error) {
+        console.error("Error:", error);
+        throw error;
+      }
     }
   };
-  const handleChange = (event) => {
-    setUser(event.target.value);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -26,13 +55,15 @@ function Login() {
         <input
           type="text"
           className="w-[328px] h-[46px] mx-[202.5px] mb-[20px] px-[20px] bg-[#F1F0F3] text-[#6C6A6A] font-regular border-solid border-2 border-[#6C6A6A]/[.6] hover:border-[#6C6A6A] focus:border-[#6C6A6A] outline-none rounded-lg placeholder:text-[#6C6A6A] placeholder:font-regular max-md:mx-[25px] max-md:w-[250px]"
-          value={user}
+          name="email"
           onChange={handleChange}
           placeholder="Enter email"
         />
         <input
           type="password"
           className="w-[328px] h-[46px] mx-[202.5px] mb-[10px] px-[20px] bg-[#F1F0F3] text-[#6C6A6A] font-regular border-solid border-2 border-[#6C6A6A]/[.6] hover:border-[#6C6A6A] focus:border-[#6C6A6A] outline-none rounded-lg placeholder:text-[#6C6A6A] placeholder:font-regular max-md:mx-[25px] max-md:w-[250px]"
+          name="password"
+          onChange={handleChange}
           placeholder="Enter password"
         />
 

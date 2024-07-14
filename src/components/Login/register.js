@@ -1,32 +1,45 @@
 import React, { useState } from "react";
 import Input from "./input";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register(props) {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
     email: "",
     password: "",
-    phone: "",
-    birthDate: "",
-    course: "",
-    registration: "",
-    university: ""
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    console.log(formData);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:8080/api/users/register", formData)
-      .then(response => {
+
+    let newFormData = {
+      name: formData.name + formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      role: "USER",
+    };
+
+    console.log(newFormData);
+
+    const response = await fetch("/api/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newFormData),
+    })
+      .then((response) => {
         console.log("User registered:", response.data);
+        navigate("/home");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("There was an error registering the user!", error);
       });
   };
@@ -39,10 +52,30 @@ function Register(props) {
         Register
       </h1>
       <form className="flex flex-col" onSubmit={handleSubmit}>
-        <Input type="text" name="name" placeholder="Your First Name" onChange={handleChange} />
-        <Input type="text" name="lastName" placeholder="Your Last Name" onChange={handleChange} />
-        <Input type="email" name="email" placeholder="E-mail" onChange={handleChange} />
-        <Input type="password" name="password" placeholder="Password" onChange={handleChange} />
+        <Input
+          type="text"
+          name="name"
+          placeholder="Your First Name"
+          onChange={handleChange}
+        />
+        <Input
+          type="text"
+          name="lastName"
+          placeholder="Your Last Name"
+          onChange={handleChange}
+        />
+        <Input
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          onChange={handleChange}
+        />
+        <Input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+        />
         <input
           type="submit"
           value={"Sing Up"}
