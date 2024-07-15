@@ -18,23 +18,26 @@ function Login() {
       try {
         console.log(formData);
 
-        const response = await fetch("/api/users/login", {
+        const response = await fetch("api/users/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        })
-          .then((response) => {
-            const data = response.json();
+        });
 
-            console.log("Login Realizado:", response.data);
-            localStorage.setItem("token", data.token);
-            navigate("/home");
-          })
-          .catch((error) => {
-            console.error("There was an error login the user!", error);
+        if (response.ok) {
+          const data = response.json();
+          console.log(data && data.token);
+          console.log("Login Realizado:", response.data);
+          localStorage.setItem("token", JSON.stringify(data.token));
+          navigate("/home");
+        } else {
+          setFormData({
+            email: "",
+            password: "",
           });
+        }
       } catch (error) {
         console.error("Error:", error);
         throw error;
@@ -56,6 +59,7 @@ function Login() {
           type="text"
           className="w-[328px] h-[46px] mx-[202.5px] mb-[20px] px-[20px] bg-[#F1F0F3] text-[#6C6A6A] font-regular border-solid border-2 border-[#6C6A6A]/[.6] hover:border-[#6C6A6A] focus:border-[#6C6A6A] outline-none rounded-lg placeholder:text-[#6C6A6A] placeholder:font-regular max-md:mx-[25px] max-md:w-[250px]"
           name="email"
+          value={formData.email}
           onChange={handleChange}
           placeholder="Enter email"
         />
@@ -63,6 +67,7 @@ function Login() {
           type="password"
           className="w-[328px] h-[46px] mx-[202.5px] mb-[10px] px-[20px] bg-[#F1F0F3] text-[#6C6A6A] font-regular border-solid border-2 border-[#6C6A6A]/[.6] hover:border-[#6C6A6A] focus:border-[#6C6A6A] outline-none rounded-lg placeholder:text-[#6C6A6A] placeholder:font-regular max-md:mx-[25px] max-md:w-[250px]"
           name="password"
+          value={formData.password}
           onChange={handleChange}
           placeholder="Enter password"
         />
