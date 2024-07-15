@@ -8,7 +8,7 @@ function CadastroQuestao() {
   const [imagem, setImagem] = useState(null);
   const [alternativas, setAlternativas] = useState(['', '', '', '']);
   const [explicacoes, setExplicacoes] = useState(['', '', '', '']);
-  const [respostaCorreta, setRespostaCorreta] = useState('');
+  const [respostaCorretaIndex, setRespostaCorretaIndex] = useState(null);
   const [themes, setThemes] = useState([]);
   const [selectedTheme, setSelectedTheme] = useState('');
   const [feedback, setFeedback] = useState(false);
@@ -23,23 +23,22 @@ function CadastroQuestao() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const alternativasData = alternativas.map((alt, index) => ({
       answer: alt,
+      corret: respostaCorretaIndex === index,
       explication: explicacoes[index],
-      isCorret: respostaCorreta === alt,
+      
     }));
-
+  
     const questao = {
       statement,
-      // imagem,
-      // alternativas,
-      // explicacoes,
-      // respostaCorreta,
       theme: { id: selectedTheme },
     };
-
-
+  
+    console.log("Questão a ser enviada:", questao);
+    console.log("Alternativas a serem enviadas:", alternativasData);
+  
     fetch('http://localhost:8080/api/questions', {
       method: 'POST',
       headers: {
@@ -52,21 +51,22 @@ function CadastroQuestao() {
         if (!data.id) {
           throw new Error('Failed to get question ID');
         }
-
+  
         const questionId = data.id;
-        const alternativasData = alternativas.map((alt, index) => ({
-          answer: alt,
-          explication: explicacoes[index],
-          isCorret: respostaCorreta === alt,
-          question: { id: questionId }
+        const alternativasDataWithQuestionId = alternativasData.map((alt) => ({
+          ...alt,
+          question: { id: questionId },
         }));
-
+  
+        console.log("Alternativas com ID da questão a serem enviadas:", alternativasDataWithQuestionId);
+        console.log("Alternativas com ID da questão a serem enviadas FORMAT:", JSON.stringify(alternativasDataWithQuestionId));
+  
         fetch('http://localhost:8080/api/answers', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(alternativasData),
+          body: JSON.stringify(alternativasDataWithQuestionId),
         })
           .then(response => response.json())
           .then(data => {
@@ -83,8 +83,9 @@ function CadastroQuestao() {
       });
   };
 
-  const handleOptionChange = (e) => {
-    setRespostaCorreta(e.target.value);
+  const handleOptionChange = (index) => {
+    setRespostaCorretaIndex(index);
+    console.log(`Selected index: ${index}`);
   };
 
   const handleImageChange = (e) => {
@@ -105,8 +106,8 @@ function CadastroQuestao() {
     newExplicacoes.splice(index, 1);
     setAlternativas(newAlternativas);
     setExplicacoes(newExplicacoes);
-    if (respostaCorreta === alternativas[index]) {
-      setRespostaCorreta('');
+    if (respostaCorretaIndex === index) {
+      setRespostaCorretaIndex(null);
     }
   };
 
@@ -153,6 +154,7 @@ function CadastroQuestao() {
                 ))}
               </select>
               {alternativas.map((alt, index) => (
+                
                 <div key={index} className="flex flex-col items-center w-[1000px] max-md:w-[300px] font-inter-regular">
                   <div className="flex flex-row items-center w-full">
                     <input
@@ -162,6 +164,7 @@ function CadastroQuestao() {
                       onChange={(e) => {
                         const newAlternativas = [...alternativas];
                         newAlternativas[index] = e.target.value;
+                        console.log(index);
                         setAlternativas(newAlternativas);
                       }}
                       placeholder={`Alternativa ${index + 1}`}
@@ -171,16 +174,16 @@ function CadastroQuestao() {
                       <input
                         type="radio"
                         name="respostaCorreta"
-                        value={alt}
-                        checked={respostaCorreta === alt}
-                        onChange={handleOptionChange}
+                        value={index}
+                        checked={respostaCorretaIndex === index}
+                        onChange={() => handleOptionChange(index)}
                         className="hidden"
                       />
                       <span
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${respostaCorreta === alt ? 'border-[#130338]' : 'border-gray-300'
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${respostaCorretaIndex === index ? 'border-[#130338]' : 'border-gray-300'
                           }`}
                       >
-                        {respostaCorreta === alt && (
+                        {respostaCorretaIndex === index && (
                           <span className="w-3 h-3 bg-[#130338] rounded-full"></span>
                         )}
                       </span>
