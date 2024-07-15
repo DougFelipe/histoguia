@@ -28,7 +28,7 @@ function Login() {
 
         if (response.ok) {
           const data = response.json();
-          console.log(data && data.token);
+          console.log("token: ",data && data.token);
           console.log("Login Realizado:", response.data);
           localStorage.setItem("token", JSON.stringify(data.token));
           navigate("/home");

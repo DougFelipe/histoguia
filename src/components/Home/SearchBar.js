@@ -11,11 +11,14 @@ import CompleteIcon from './CompleteIcon';
 import PartialSVGImage from './PartialSVGImage';
 import BlockedIcon from './BlockedIcon';
 import NotStartedIcon from './NotStartedIcon';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
   const [query, setQuery] = useState('');
+  const [themes, setThemes] = useState('');
   const [results, setResults] = useState([]);
-
+  const navigate = useNavigate();
+ 
   const temas = [
     { nome: 'Epitélio Simples', img: EpitelioSimples, status: 'Não iniciado', link: '/quizSetup' },
     { nome: 'Epitélio Estratificado', img: EpitelioEstratificado, status: 'Bloqueado', link: '/quizSetup' },
@@ -28,7 +31,13 @@ const SearchBar = () => {
   ];
 
   useEffect(() => {
-    setResults(temas);
+    fetch('/api/theme')
+      .then(response => response.json())
+      .then(data => setThemes(data));
+  }, []);
+
+  useEffect(() => {
+    setResults(themes);
   }, []);
 
   const handleInputChange = (event) => {
@@ -36,12 +45,12 @@ const SearchBar = () => {
     setQuery(value);
 
     if (value) {
-      const filteredItems = temas.filter((tema) =>
-        tema.nome.toLowerCase().includes(value.toLowerCase())
+      const filteredItems = themes.filter((theme) =>
+      theme.name.toLowerCase().includes(value.toLowerCase())
       );
       setResults(filteredItems);
     } else {
-      setResults(temas);
+      setResults(themes);
     }
   };
 
@@ -56,6 +65,10 @@ const SearchBar = () => {
       return <PartialSVGImage percentage={status} />;
     }
     return null;
+  };
+
+  const handleSetup = (id) => {
+    navigate(`/quizSetup/${id}`);
   };
 
   return (
@@ -91,10 +104,10 @@ const SearchBar = () => {
           <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {results.map((result, index) => (
               <div key={index} className="p-4 bg-white rounded-[23px] shadow-lg">
-                <a href={result.link} className='w-full pointer flex flex-col justify-between'>
+                <a onClick={() => handleSetup(result.id)} className='w-full pointer flex flex-col justify-between'>
                   <div className='w-full'>
-                    <img className='object-cover w-full h-[140px] md:h-[180px] mb-2 rounded-[12px]' src={result.img} alt={result.nome} />
-                    <span className='w-full block text-left mt-2 text-[16px] font-primary font-inter-semi h-[60px]' >{result.nome}</span>
+                    <img className='object-cover w-full h-[140px] md:h-[180px] mb-2 rounded-[12px]' src={result.img} alt={result.name} />
+                    <span className='w-full block text-left mt-2 text-[16px] font-primary font-inter-semi h-[60px]' >{result.name}</span>
                   </div>
                   <div className='w-full flex justify-between items-center mt-10'>
                     <span className='block text-left  text-[14px] font-[#9098A3] font-inter-regular' >

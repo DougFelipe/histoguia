@@ -24,7 +24,7 @@ const RoutesApp = () => {
         <Route element={<LoginPage />} path="/" exact />
         <Route element={<Home />} path="/home" exact />
         <Route element={<QuizQuestion />} path="/quiz" />
-        <Route element={<QuizSetup />} path="/quizSetup" />
+        <Route element={<QuizSetup />} path="/quizSetup/:id" />
         <Route element={<Register />} path="/register" />
         <Route element={<AdmAlunos />} path="/admAlunos" />
         <Route element={<UserProfile />} path="/profile" />
