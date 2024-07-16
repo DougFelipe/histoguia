@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Control = ({ onChange }) => {
-  const [questions, setQuestions] = useState(0);
+  const [questions, setQuestions] = useState(1);
 
   useEffect(() => {
     onChange(questions);
@@ -34,7 +34,7 @@ const Control = ({ onChange }) => {
             <input
               id="questions"
               type="range"
-              min="0"
+              min="1"
               max="30"
               step="1"
               value={questions}

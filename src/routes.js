@@ -23,7 +23,7 @@ const RoutesApp = () => {
       <Routes>
         <Route element={<LoginPage />} path="/" exact />
         <Route element={<Home />} path="/home" exact />
-        <Route element={<QuizQuestion />} path="/quiz" />
+        <Route path="/quiz" element={<QuizQuestion/>} />
         <Route element={<QuizSetup />} path="/quizSetup/:id" />
         <Route element={<Register />} path="/register" />
         <Route element={<AdmAlunos />} path="/admAlunos" />

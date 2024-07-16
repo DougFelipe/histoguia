@@ -9,7 +9,7 @@ const QuizSetup = () => {
     const { id } = useParams();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [questions, setQuestions] = useState([]);
-
+    const navigate = useNavigate();
     const handleToggleSidebar = (isOpen) => {
         setIsSidebarOpen(isOpen);
     };
@@ -46,7 +46,9 @@ const QuizSetup = () => {
                 }
             }));
     
-            console.log(updatedQuestions);
+            console.log("up :", updatedQuestions);
+            setQuestions(updatedQuestions);
+            navigate('/quiz', { state: { questions: updatedQuestions } });
             // Atualizar o estado ou fazer outra operação com as questões atualizadas
             // setQuestions(updatedQuestions);
         } catch (error) {

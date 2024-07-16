@@ -20,24 +20,28 @@ const SearchBar = () => {
   const navigate = useNavigate();
  
   const temas = [
-    { nome: 'Epitélio Simples', img: EpitelioSimples, status: 'Não iniciado', link: '/quizSetup' },
-    { nome: 'Epitélio Estratificado', img: EpitelioEstratificado, status: 'Bloqueado', link: '/quizSetup' },
-    { nome: 'Tecido Conjuntivo Propriamente Dito', img: TecidoConjuntivoDito, status: 50, link: '/quizSetup' },
-    { nome: 'Tecido Conjuntivo Denso', img: TecidoConjuntivoDenso, status: 75, link: '/quizSetup' },
-    { nome: 'Tecido Muscular Estriado Esquelético', img: TecidoMuscularEstriado, status: 'Completo', link: '/quizSetup' },
-    { nome: 'Tecido Muscular Liso', img: TecidoMuscularLiso, status: 'Bloqueado', link: '/quizSetup' },
-    { nome: 'Tecido Nervoso', img: TecidoNervoso, status: 30, link: '/quizSetup' },
-    { nome: 'Cartilagem Hialina', img: CartilagemHialina, status: 90, link: '/quizSetup' }
+    { nome: 'Epitélio Simples', img: EpitelioSimples, status: 'Não iniciado', link: '/quizSetup/1' },
+    { nome: 'Epitélio Estratificado', img: EpitelioEstratificado, status: 'Não iniciado', link: '/quizSetup/2' },
+    { nome: 'Tecido Conjuntivo Propriamente Dito', img: TecidoConjuntivoDito, status: 'Bloqueado', link: '/quizSetup/3' },
+    { nome: 'Tecido Conjuntivo Denso', img: TecidoConjuntivoDenso, status: 'Bloqueado', link: '/quizSetup/4' },
+    { nome: 'Tecido Muscular Estriado Esquelético', img: TecidoMuscularEstriado, status: 'Bloqueado', link: '/quizSetup/5' },
+    { nome: 'Tecido Muscular Liso', img: TecidoMuscularLiso, status: 'Bloqueado', link: '/quizSetup/6' },
+    { nome: 'Tecido Nervoso', img: TecidoNervoso,status: 'Bloqueado', link: '/quizSetup/7' },
+    { nome: 'Cartilagem Hialina', img: CartilagemHialina, status: 'Bloqueado', link: '/quizSetup/8' }
   ];
 
   useEffect(() => {
     fetch('/api/theme')
       .then(response => response.json())
-      .then(data => setThemes(data));
-  }, []);
-
-  useEffect(() => {
-    setResults(themes);
+      .then(data => {
+        setThemes(data);
+        setResults(data);
+      })
+      .catch(() => {
+        // Handle the case where the fetch fails by falling back to default themes
+        setThemes(temas);
+        setResults(temas);
+      });
   }, []);
 
   const handleInputChange = (event) => {
@@ -106,14 +110,14 @@ const SearchBar = () => {
               <div key={index} className="p-4 bg-white rounded-[23px] shadow-lg">
                 <a onClick={() => handleSetup(result.id)} className='w-full pointer flex flex-col justify-between'>
                   <div className='w-full'>
-                    <img className='object-cover w-full h-[140px] md:h-[180px] mb-2 rounded-[12px]' src={result.img} alt={result.name} />
+                    <img className='object-cover w-full h-[140px] md:h-[180px] mb-2 rounded-[12px]' src={temas[index].img} alt={result.name} />
                     <span className='w-full block text-left mt-2 text-[16px] font-primary font-inter-semi h-[60px]' >{result.name}</span>
                   </div>
                   <div className='w-full flex justify-between items-center mt-10'>
                     <span className='block text-left  text-[14px] font-[#9098A3] font-inter-regular' >
-                      {typeof result.status === 'number' ? `${result.status}% completo` : result.status}
+                      {typeof result.status === 'number' ? `${temas[index].status}% completo` : temas[index].status}
                     </span>
-                    <div>{renderStatusComponent(result.status)}</div>
+                    <div>{renderStatusComponent(temas[index].status)}</div>
                   </div>
                 </a>
               </div>
