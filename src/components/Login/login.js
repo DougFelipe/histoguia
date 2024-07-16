@@ -11,37 +11,41 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      console.log(formData);
 
-    if (formData.email === "admin@gmail.com") {
-      navigate("/admAlunos");
-    } else {
-      try {
-        console.log(formData);
+      const response = await fetch("api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-        const response = await fetch("api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+      const isJson = response.headers
+        .get("content-type")
+        ?.includes("application/json");
+      const data = isJson ? await response.json() : null;
 
-        if (response.ok) {
-          const data = response.json();
-          console.log("token: ",data && data.token);
-          console.log("Login Realizado:", response.data);
-          localStorage.setItem("token", JSON.stringify(data.token));
+      console.log(data);
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+        if (data.role == "USER") {
           navigate("/home");
         } else {
-          setFormData({
-            email: "",
-            password: "",
-          });
+          navigate("/admAlunos");
         }
-      } catch (error) {
-        console.error("Error:", error);
-        throw error;
+      } else {
+        setFormData({
+          email: "",
+          password: "",
+        });
       }
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
     }
   };
 
