@@ -5,18 +5,43 @@ import Delete from "../../assets/icons/delete.svg";
 import Info from "../../assets/icons/info.svg";
 import Filter from "../../assets/icons/download-cloud.svg";
 import { useNavigate } from "react-router-dom";
+import avatar from "../../assets/img/Avatars.png";
 
 const SearchBarAluno = () => {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [results, setResults] = useState([]);
+  const [dataAux, setDataAux] = useState([]);
   const [hidden, setHidden] = useState("hidden");
-  const items = alunos;
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    setResults(items);
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/users/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          const newData = data.filter((item) =>
+            item.role.toLowerCase().includes("USER".toLowerCase())
+          );
+          setResults(newData);
+          setDataAux(newData);
+        } else {
+          const errorMessage = await response.text();
+          console.log(errorMessage);
+        }
+      } catch (error) {
+        console.log("An error occurred. Please try again.");
+      }
+    };
+    fetchUsers();
   }, []);
 
   const handleInputChange = (event) => {
@@ -24,12 +49,12 @@ const SearchBarAluno = () => {
     setQuery(value);
 
     if (value) {
-      const filteredItems = items.filter((item) =>
-        item.nome.toLowerCase().includes(value.toLowerCase())
+      const filteredItems = results.filter((item) =>
+        item.name.toLowerCase().includes(value.toLowerCase())
       );
       setResults(filteredItems);
     } else {
-      setResults(items);
+      setResults(dataAux);
     }
   };
 
@@ -41,7 +66,7 @@ const SearchBarAluno = () => {
     }
   };
 
-  const handleStatusClick = (status) => {
+  /*const handleStatusClick = (status) => {
     const value = status;
     if (value !== "All") {
       setStatus(value);
@@ -50,7 +75,7 @@ const SearchBarAluno = () => {
     } else {
       setResults(items);
     }
-  };
+  };*/
 
   const pageInfo = (pos) => {
     const filteredItems = results.filter((item, index) => index === pos);
@@ -59,9 +84,31 @@ const SearchBarAluno = () => {
     });
   };
 
-  const deleteAluno = (pos) => {
-    const filteredItems = results.filter((item, index) => index !== pos);
-    setResults(filteredItems);
+  const deleteAluno = async (pos) => {
+    try {
+      const filteredItems = results.filter((item, index) => index === pos);
+
+      const response = await fetch(
+        `http://localhost:8080/api/users/delete/${filteredItems[0].id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log("User deleted successfully.");
+        const filteredItems = results.filter((item, index) => index !== pos);
+        setResults(filteredItems);
+      } else {
+        const errorMessage = await response.text();
+        console.log(errorMessage);
+      }
+    } catch (error) {
+      console.log("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -110,16 +157,16 @@ const SearchBarAluno = () => {
           >
             <p className="font-semibold text-[20px] text-center p-2">Status</p>
             <div className="flex flex-col items-center gap-2 cursor-pointer">
-              <div onClick={() => handleStatusClick("All")}>
+              <div>
                 <Status status="All" value={status} />
               </div>
-              <div onClick={() => handleStatusClick("Active")}>
+              <div>
                 <Status status="Active" value={status} />
               </div>
-              <div onClick={() => handleStatusClick("Offline")}>
+              <div>
                 <Status status="Offline" value={status} />
               </div>
-              <div onClick={() => handleStatusClick("Wait")}>
+              <div>
                 <Status status="Wait" value={status} />
               </div>
             </div>
@@ -144,16 +191,13 @@ const SearchBarAluno = () => {
                   <div className="w-[310px] flex flex-row">
                     <img
                       className="w-[40px] h-[40px] rounded-[12px]"
-                      src={result.profileImage}
+                      src={avatar}
                       alt={result.firstName}
                     />
                     <div className="flex flex-col justify-center ml-[10px]">
                       <div className="flex flex-row gap-1">
                         <span className="text-left text-[14px] font-primary font-inter-semi max-md:text-[12px]">
-                          {result.firstName}
-                        </span>
-                        <span className="text-left text-[14px] font-primary font-inter-semi max-md:text-[12px]">
-                          {result.lastName}
+                          {result.name}
                         </span>
                       </div>
                       <span className="text-left text-[14px] text-[#959595] font-inter">
@@ -166,7 +210,7 @@ const SearchBarAluno = () => {
                   <span className="hidden text-[#959595] text-[15px] p-0 max-md:block">
                     Status
                   </span>
-                  <Status status={result.status} />
+                  <Status status="Active" />
                 </div>
 
                 <div className="w-[350px] items-center flex justify-between max-md:flex-row max-md:w-[280px]">

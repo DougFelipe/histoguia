@@ -1,8 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "../assets/img/Avatar.png";
+import { useNavigate } from "react-router-dom";
+import avatar from "../assets/img/Avatar.png";
 
 const Sidebar = ({ onToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState({
+    name: "",
+    username: "",
+    status: "Active",
+    email: "",
+    phone: "",
+    birthdate: "",
+    course: "",
+    registration: "",
+    university: "",
+    profileImage: avatar,
+  });
+
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/users/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          const newUser = {
+            name: data.name,
+            username: data.email,
+            status: "Active",
+            email: data.email,
+            phone: data.phone,
+            course: data.course,
+            university: data.university,
+            profileImage: avatar,
+          };
+          setUser(newUser);
+        } else {
+          const errorMessage = await response.text();
+          console.log("Erro: " + errorMessage);
+        }
+      } catch (error) {
+        console.log("An error occurred. Please try again.");
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  const handleClick = () => {
+    navigate("/profile", {
+      state: { user },
+    });
+  };
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -53,8 +112,9 @@ const Sidebar = ({ onToggle }) => {
       </button>
 
       <div
-        className={`fixed top-0 left-0  h-full w-80 bg-[#140B2A] shadow-lg transform z-50 ${isOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300`}
+        className={`fixed top-0 left-0  h-full w-80 bg-[#140B2A] shadow-lg transform z-50 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300`}
       >
         <div className="flex items-center justify-between px-4 py-6 bg-[#140B2A] text-white">
           <div className="flex">
@@ -116,8 +176,8 @@ const Sidebar = ({ onToggle }) => {
             </span>
           </a>
 
-          <a
-            href="/profile"
+          <button
+            onClick={handleClick}
             className="flex justify-left my-3  items-center py-3 px-3 text-gray-700 hover:bg-[#3D2E7C] rounded-[8px]"
           >
             <svg
@@ -143,7 +203,7 @@ const Sidebar = ({ onToggle }) => {
             <span className="px-2 text-[15px] text-white font-inter-semi">
               Meus Dados
             </span>
-          </a>
+          </button>
           <a
             href="/estatistic"
             className="flex justify-left my-3  items-center py-3 px-3 text-gray-700 hover:bg-[#3D2E7C] rounded-[8px]"
@@ -172,8 +232,6 @@ const Sidebar = ({ onToggle }) => {
               Estatísticas
             </span>
           </a>
-
-          
 
           <a
             href="/historic"

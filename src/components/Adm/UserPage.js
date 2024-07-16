@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "../../components/Menu.js";
 
+import avatar from "../../assets/img/Avatars.png";
+
 const UserPage = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -35,26 +37,16 @@ const UserPage = () => {
           <div className="w-full rounded-[20px] bg-white font-inter-medium mt-10 p-8">
             <div className="relative mb-4">
               <img
-                src={
-                  result.filteredItems[0].profileImage || "default-profile.png"
-                }
+                src={avatar || "default-profile.png"}
                 alt="Profile"
                 className="w-24 h-24 rounded-full object-cover cursor-pointer"
               />
             </div>
-            <div className="flex mb-4">
-              <div className="w-1/2 pr-2">
-                <p className="block mb-2">Nome</p>
-                <p className="w-full p-2 rounded-lg border-solid border-2 font-inter-regular  text-primary focus:border-[#130338]">
-                  {result.filteredItems[0].firstName}
-                </p>
-              </div>
-              <div className="w-1/2 pl-2">
-                <p className="block mb-2">Sobrenome</p>
-                <p className="w-full p-2 rounded-lg border-solid border-2 font-inter-regular  text-primary focus:border-[#130338]">
-                  {result.filteredItems[0].lastName}
-                </p>
-              </div>
+            <div className="mb-4">
+              <p className="block mb-2">Nome</p>
+              <p className="w-full p-2 rounded-lg border-solid border-2 font-inter-regular  text-primary focus:border-[#130338]">
+                {result.filteredItems[0].name}
+              </p>
             </div>
             <div className="mb-4">
               <p className="block mb-2">Email</p>
