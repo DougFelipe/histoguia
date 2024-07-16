@@ -11,7 +11,6 @@ const EditQuestion = () => {
   const [answers, setAnswers] = useState([]);
   const [enunciado, setEnunciado] = useState('');
   const [imagem, setImagem] = useState(null);
-  //const [alternativas, setAlternativas] = useState(['', '', '', '']);
   const [alternatives, setAlternatives] = useState([]);
   const [explicacoes, setExplicacoes] = useState(['', '', '', '']);
   const [respostaCorreta, setRespostaCorreta] = useState('');
@@ -19,9 +18,6 @@ const EditQuestion = () => {
   const [themes, setThemes] = useState([]);
   const [selectedTheme, setSelectedTheme] = useState('');
   const [buttonText, setButtonText] = useState('Atualizar Questão');
-
-
-
 
   useEffect(() => {
     fetch('/api/theme')
@@ -33,8 +29,6 @@ const EditQuestion = () => {
       .then(data => {
         setEnunciado(data.statement);
         setQuestion(data);
-        console.log(question);
-        //setImagem(data.image ? URL.createObjectURL(data.image) : null);
         setSelectedTheme(data.theme.id);
 
         fetch(`http://localhost:8080/api/answers/question/${id}`)
@@ -44,7 +38,7 @@ const EditQuestion = () => {
             if (Array.isArray(alternativeData)) {
               setAlternatives(alternativeData.map(alt => alt.answer));
               setExplicacoes(alternativeData.map(alt => alt.explication));
-              const correctAnswer = alternativeData.find(alt => alt.isCorret);
+              const correctAnswer = alternativeData.find(alt => alt.corret);
               if (correctAnswer) {
                 setRespostaCorreta(correctAnswer.answer);
               }
@@ -57,12 +51,9 @@ const EditQuestion = () => {
       .catch(error => console.error('Error fetching question:', error));
   }, [id]);
 
-
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     // Monta o objeto da questão atualizada
     const questaoAtualizada = {
       id,
@@ -74,14 +65,14 @@ const EditQuestion = () => {
       id: answers[index]?.id, // Verifica se há um ID existente para atualização
       answer: alt,
       explication: explicacoes[index],
-      isCorret: respostaCorreta === alt,
+      corret: respostaCorreta === alt,
       question: { id: id }
     }));
-  
+
     setFeedback(true);
-  
+
     // Define a promessa para enviar os dados da questão atualizada
-    const updateQuestion = (e) => fetch(`http://localhost:8080/api/questions/${id}`, {
+    const updateQuestion = () => fetch(`http://localhost:8080/api/questions/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +84,6 @@ const EditQuestion = () => {
       }
       return response.json();
     }).then(data => {
-      console.log('Questão atualizada:', data);
       setFeedback(true);
       // Após atualizar a questão, atualiza as alternativas
       return Promise.all(alternativasAtualizadas.map(alt => {
@@ -133,7 +123,7 @@ const EditQuestion = () => {
     }).catch(error => {
       console.error('Error updating question or answers:', error);
     });
-  
+
     // Executa a promessa de atualização da questão e das alternativas
     updateQuestion();
   };
@@ -232,10 +222,10 @@ const EditQuestion = () => {
                         className="hidden"
                       />
                       <span
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${respostaCorreta === alt ? 'border-[#130338]' : 'border-gray-300'
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${respostaCorreta === alt || answers[index]?.corret ? 'border-[#130338]' : 'border-gray-300'
                           }`}
                       >
-                        {respostaCorreta === alt && (
+                        {(respostaCorreta === alt || answers[index].corret === true) && (
                           <span className="w-3 h-3 bg-[#130338] rounded-full"></span>
                         )}
                       </span>

@@ -73,7 +73,7 @@ const questions = [
   },
 ];
 
-const QuizQuestion = () => {
+const QuizQuestion = ({ questions }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
